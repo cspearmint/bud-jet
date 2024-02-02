@@ -4,8 +4,10 @@ A budgeting and financial planning web-app.
 This project was developed at UF for CEN3031 software engineering.
 
 Names of Collaborators:
-Cody Flynn, Leyna Huynh
-**your names here**
+Cody
+Picabo
+Leyna
+Matthew
 
 While our plans aren't too far along yet, we have a basic outline of features to implement:
 
@@ -27,8 +29,8 @@ our team:
 3. Generative AI that suggests financial tips tailored to users
 4. Generalized budgeting for all groups of people such as businessowners and homeowners
 
-Framework/Implementation: **write more here**
+Framework/Implementation:
 Since Budjet will be implemented as a website, it will need to have a frontend, a backend, and
-a database. For the frontend, we will utilize JavaScript with Node.js, along with HTML/CSS for
+a database. For the frontend, we will utilize JavaScript with React and Node.js, along with HTML/CSS for
 formatting purposes. For our backend implementation, we will use Java. For our database, we will
 use MySQL.
