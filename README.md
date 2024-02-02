@@ -4,7 +4,7 @@ A budgeting and financial planning web-app.
 This project was developed at UF for CEN3031 software engineering.
 
 Names of Collaborators:
-Cody Flynn
+Cody Flynn, Leyna Huynh
 **your names here**
 
 While our plans aren't too far along yet, we have a basic outline of features to implement:
