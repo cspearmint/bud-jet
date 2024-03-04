@@ -1,0 +1,46 @@
+
+.login_card {
+    background-color: #424B54;
+    width: 95%;
+    height: 82%;
+    margin-left: 50px;
+    display: flex;
+    /*border: 5px solid #424B54; */
+    /*border-radius: 30px*/
+  }
+
+  .login_card-container{
+    padding: 3rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .login_card-container-text{
+    font-size: 24;
+    font-weight: bold;
+    color: white;
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+  
+  }
+
+  .login_card-container-text-p1 {
+    padding-bottom: 1.5rem;
+    padding-top: 1rem;
+    margin: 0;
+  }
+
+  .highlighted-text {
+    padding-top: 1.5rem;
+    color: #FFE178;
+    display: inline-block; /* Place paragraphs on the same line */
+  }
+
+  .login_card-container-text-textboxes{
+    padding-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+  }
