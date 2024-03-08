@@ -1,16 +1,18 @@
 import React from 'react';
 import "./Loginbutton.css";
 
-function App() {
+
+const Loginbutton = ({ text }) => {
   const handleClick = () => {
     alert('Button clicked!');
   };
 
   return (
-    <div className = "button-container">
-      <button onClick={handleClick}>Login</button>
+    <div className="button-container">
+      <button onClick={handleClick}>{text}</button>
     </div>
   );
-}
+};
 
-export default App;
+export default Loginbutton;
+

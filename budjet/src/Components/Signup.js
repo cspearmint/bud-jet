@@ -1,15 +1,15 @@
 import React from "react";
-import "./Login.css";
+import "./Signup.css";
 import BannerImage from "../Assets/login_image.png";
-import Logincard from "./Logincard";
+import Signupcard from "./Signupcard";
 
-const Login = () => {
+const Signup = () => {
     return (
-        <div className = "login-container">
-            <div className="login-container-columns">
+        <div className = "signup-container">
+            <div className="signup-container-columns">
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", placeItems: 'center', gridGap: 30, height: '100vh' }}>
-                    <Logincard />
-                    <div className = "login-container-columns-2">
+                    <Signupcard />
+                    <div className = "signup-container-columns-2">
                         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
                             <img src={BannerImage} alt="" />
                         </div>
@@ -20,4 +20,4 @@ const Login = () => {
     );
   };
   
-  export default Login;
+  export default Signup;
