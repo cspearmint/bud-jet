@@ -7,6 +7,12 @@ Full functionality for account creation, logging in, getting the user id upon lo
 
 There is also a main function leftover from testing that is commented out.
 
+Requires:
+npm install mongodb@6.5
+npm install bcrypt
+npm install prompt-sync (if using main function)
+
+
 -Cody Flynn
 */
 
@@ -122,7 +128,7 @@ async function createUser(username, password) {
     }
 
     // if this code is reached, then user is created, so their entry in Data is created
-    client.db("BudJet").collection("Data").insertOne({ cookie: cookie, data: [ 1, 2, 3 ] });
+    await client.db("BudJet").collection("Data").insertOne({ cookie: cookie, data: [ 1, 2, 3 ] });
     // disconnects before returning
     await disconnectFromMongoDB();
     return 0;
