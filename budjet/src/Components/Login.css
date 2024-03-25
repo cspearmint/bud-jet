@@ -1,0 +1,30 @@
+.login-container {
+    background-color: #1F272A;
+    width: auto;
+    height: 100vh;
+  }
+
+  .login-container-columns {
+    display: flex;
+    align-items: center; /* Vertically centers child elements */
+  }
+
+  /*.login-container-columns-2 {
+    border: 5px solid blue
+  } */
+
+  .login-container-columns-2 img{
+    max-width: 100%;
+    height: auto;
+  }
+
+  /*.login-container-columns-1 {
+    background-color: #424B54;
+    width: 95%;
+    height: 82%;
+    margin-left: 50px;
+    border: 5px solid #424B54;
+    border-radius: 30px
+  } */
+
+
