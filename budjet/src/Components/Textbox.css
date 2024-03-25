@@ -1,0 +1,15 @@
+.textbox-container{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.textbox-container-input{
+    font-size: 24;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    font-family: "Inter";
+    font-weight: black;
+}

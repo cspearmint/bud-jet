@@ -1,0 +1,26 @@
+.checkbox-container {
+    display: flex;
+    font-family: "Inter";
+    font-size: 24;
+    align-items: center;
+    /* Add other container styles as needed */
+}
+
+.checkbox-container-input {
+    /* Hide the default checkbox appearance */
+    /*-webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    /* Create custom checkbox appearance */
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+
+/* Style the label text */
+.checkbox-container p {
+      /* Add other label styles as needed */
+      margin-left: 6px;
+      
+}

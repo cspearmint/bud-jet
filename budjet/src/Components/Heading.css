@@ -1,0 +1,19 @@
+.heading-container-large{
+    font-size: 40;
+    font-weight: black;
+    color: white;
+    padding: 0;
+    margin: 0;
+}
+
+.heading-container-large-contents{
+    display: inline-block; /* Make the container hug its text contents */
+    padding-top: 0.5rem;
+    margin: 0;
+}
+
+.heading-container-large-underline{
+    width: 75%; 
+    height: 4px;
+    background-color: #FF684F;
+}
