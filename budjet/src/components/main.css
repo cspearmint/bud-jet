@@ -1,0 +1,327 @@
+.main {
+  font-family: 'Arial', sans-serif;
+  color: white;
+  background-color: #333;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main-header {
+  background-color: #222;
+  padding: 20px;
+  padding-left: 50px;
+  width: 100%;
+  text-align: left;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.stats-container {
+  display: flex;
+  flex-direction: column; /* stack them vertically */
+  align-items: center; 
+  padding: 30px;
+}
+
+.stats-title {
+  color: white;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-left: 20px;
+  padding-bottom: 10px; 
+  font-size: 2rem;
+  position: relative;
+  display: inline-block;
+  border-bottom: 2px solid #FF684F;
+}
+
+.total-text {
+  font-size: 1.5rem;
+  margin-top: 80px; 
+}
+
+.total-spending {
+  margin-left: 30px; 
+}
+
+
+
+.category {
+  background-color: #424B54;
+  border-radius: 8px;
+  margin: 10px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+
+.current-stats {
+  background-color: #424B54;
+  border-radius: 8px;
+  padding: 10px;
+  width: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  display: flex;
+  font-size: 1.5rem;
+  justify-content: space-between; 
+  position: relative;
+  display: inline-block;
+  border-bottom: 2px solid #FF684F; 
+}
+
+.stats-overview {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+
+
+
+.categories-summary {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; 
+  text-align: right;
+  flex: 3;
+  margin: 60px;
+}
+
+/* current-category-stats */
+.category-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px; 
+  padding: 5px; 
+}
+
+
+.category-name {
+  font-weight: bold;
+  font-size: 1.4rem;
+  color: #ccc;
+  
+}
+
+.category-value {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #FFE178;
+  padding-left: 20px;
+}
+
+
+.stats-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.categories {
+  text-align: left;
+}
+
+.total-spent {
+  text-align: left;
+  margin-top: 8px; 
+}
+
+.total {
+  font-size: 40px; 
+  font-weight: bold;
+  color: #FFE178;
+}
+
+
+
+/*categories*/
+.disposable,
+.groceries,
+.hobby,
+.housing,
+.tuition,
+.scholarship {
+  background-color: #424B54;
+  border-radius: 20px;
+  margin: 20px;
+  padding: 20px;
+  flex: 2; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  display: inline-block;
+  border-bottom: 2px solid #FF684F; 
+  width: 10%; 
+}
+
+.disposable h1, .hobby h1, .groceries h1, .housing h1, .tuition h1, .scholarship h1{
+  position: relative;
+  display: inline-block;
+  border-bottom: 2px solid #FF684F; 
+  width: 11%; 
+}
+
+
+.category-item {
+  margin: 20px 0;
+}
+
+.categories-container {
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: center; 
+}
+
+.category-group {
+  flex-basis: 100%; 
+  margin: 5px;
+  display: flex; 
+}
+
+/* adding expensens categories */
+
+/* disposable Category */
+.disposable, .groceries, .hobby {
+  background-color: #424B54;
+  border-radius: 20px;
+  margin: 20px;
+  padding: 20px;
+  flex: 2; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* disposables & hobby categories*/
+.disposable .disposable-value, .hobby .hobby-value {
+  color: #FFE178;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.disposable .disposable-name, .hobby .hobby-name {
+  font-weight: bold;
+  font-size: 1.4rem;
+}
+
+/* groceries catgeory */
+.groceries-date {
+  font-weight: bold;
+  font-size: 1.4rem;
+}
+
+.groceries-value {
+  color: #FFE178;
+  font-size: 1.2rem;
+  font-weight: bold;
+  background-color: transparent;
+  width: 140px;
+  padding-right: 20px;
+}
+
+/*housing, tuition, scholarship*/
+.housing-date, .tuition-date, .scholarship-date {
+  font-weight: bold;
+  font-size: 1.4rem;
+}
+
+.housing-value, .tuition-value, .scholarship-value {
+  color: #FFE178;
+  font-size: 1.2rem;
+  font-weight: bold;
+  background-color: transparent;
+  width: 140px;
+  padding-right: 20px;
+}
+
+/*housing*/
+.housing-content {
+  display: grid;
+  grid-template-columns: max-content 1fr; /* Adjust column widths */
+  gap: 10px; /* Add gap between columns */
+  align-items: center; /* Align items vertically */
+}
+
+.housing-switch-container {
+  position: absolute; /* Position the switch container absolutely */
+  top: 0; /* Position at the top */
+  right: 0; /* Position at the right */
+  display: flex;
+  align-items: center;
+  margin-top: 40px;
+  margin-right:20px;
+}
+
+.housing-switch {
+  margin-left: 10px; /* Add margin between switch and text */
+}
+
+.housing-content p {
+  font-weight: bold;
+  font-size: 1.4rem;
+  color: white;
+  padding-right: 20px;
+  margin: 0; /* Remove default margin */
+}
+
+.housing-content input[type="text"] {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #FFE178;
+  background-color: transparent; /* Make the input box transparent */
+  border: 2px solid black; /* Add blue outline */
+  border-radius: 5px; /* Add border radius for a rounded look */
+  padding: 8px; /* Add padding */
+  width: 200px; /* Set width as needed */
+  margin: 5px 0; /* Add margin */
+}
+
+.housing-content input[type="text"]:disabled {
+  color: #666; /* Change color of disabled input */
+  border-color: #ccc; /* Change border color of disabled input */
+}
+
+
+.outPocket {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-top: 80px;
+}
+
+.checkbox-container {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+}
+
+.checkbox-label {
+  color: white;
+  margin-left: 20px;
+  font-size: 1.5rem; 
+}
+
+.checkbox-container input[type="checkbox"] {
+  transform: scale(3.5); 
+}
+
+/*expense button*/
+.create-btn{
+  background-color: #FF684F; 
+  color: white;
+  padding: 20px 30px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 15px;
+  margin-top: 10px;
+  cursor: pointer;
+  align-self: center; 
+}
+
+.create-btn:hover {
+  background-color: #F47C7C; 
+}
