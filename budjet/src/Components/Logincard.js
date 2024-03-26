@@ -1,9 +1,10 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import "./Logincard.css";
+import "./Loginbutton.css";
 import Heading from "./Heading";
 import Textbox from "./Textbox";
 import Checkbox from "./Checkbox";
-import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button'; 
 
 const Logincard = () => {
@@ -20,9 +21,11 @@ const Logincard = () => {
                         <Textbox />
                     </div>
                     <Checkbox />
-                    <Button variant="contained" color="primary">
-                        Login
-                    </Button>
+                    <Link to="/main">
+                        <Button variant="contained" color="primary" className="button">
+                            Login
+                        </Button>
+                    </Link>
                 </div>
             </div>
         </div>
