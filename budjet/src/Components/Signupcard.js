@@ -60,7 +60,20 @@ const Signupcard = () => {
                                 placeholder="Enter your password" 
                             />
                         </div>
-                        <Button type="submit" variant="contained" color="primary" className="button">
+                        <Button type="submit" variant="contained" style={{
+                            backgroundColor: '#FF684F',
+                            color: 'white',
+                            width: '100%',
+                            fontSize: '1.2rem',
+                            fontWeight: 'bold',
+                            borderRadius: '15px',
+                            marginTop: '10px',
+                            cursor: 'pointer',
+                            alignSelf: 'center',
+                            '&:hover': {
+                            backgroundColor: '#F47C7C',
+                            },
+                        }}>
                             Sign Up
                         </Button>
                     </div>

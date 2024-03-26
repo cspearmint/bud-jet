@@ -44,3 +44,9 @@
     display: flex;
     flex-direction: column;
   }
+
+  .signupcard-container-text-textboxes-p3 {
+    width: 150px; 
+    text-align: left; 
+    margin-right: 20px; 
+  }

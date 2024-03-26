@@ -50,8 +50,21 @@ const Logincard = () => {
                             placeholder="Enter your password"
                         />
                     </div>
-                    <Checkbox />
-                        <Button type="submit" variant="contained" color="primary" className="button">
+                        <Button type="submit" variant="contained" style={{
+                            backgroundColor: '#FF684F',
+                            color: 'white',
+                            width: '100%',
+                            padding: '10px 30px',
+                            fontSize: '1.2rem',
+                            fontWeight: 'bold',
+                            borderRadius: '15px',
+                            marginTop: '10px',
+                            cursor: 'pointer',
+                            alignSelf: 'center',
+                            '&:hover': {
+                            backgroundColor: '#F47C7C',
+                            },
+                        }}>
                             Login
                         </Button>
                     </div>

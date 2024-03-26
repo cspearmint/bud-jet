@@ -166,7 +166,7 @@
 
 
 .category-item {
-  margin: 20px 0;
+  margin: 15px 0;
 }
 
 .categories-container {
@@ -184,7 +184,7 @@
 /* adding expensens categories */
 
 /* disposable Category */
-.disposable, .groceries, .hobby {
+.disposable, .groceries, .hobby, .tuition, .scholarship, .housing{
   background-color: #424B54;
   border-radius: 20px;
   margin: 20px;
@@ -215,12 +215,15 @@
 }
 
 .groceries-value {
-  color: #FFE178;
   font-size: 1.2rem;
   font-weight: bold;
-  background-color: transparent;
-  width: 140px;
-  padding-right: 20px;
+  color: #FFE178;
+  background-color: transparent; 
+  border: 2px solid black; 
+  border-radius: 5px; 
+  padding: 8px;
+  width: 200px; 
+  margin: 5px 0; 
 }
 
 /*housing, tuition, scholarship*/
@@ -229,27 +232,32 @@
   font-size: 1.4rem;
 }
 
-.housing-value, .tuition-value, .scholarship-value {
-  color: #FFE178;
+.tuition-value, .scholarship-value {
   font-size: 1.2rem;
   font-weight: bold;
-  background-color: transparent;
-  width: 140px;
+  color: #FFE178;
+  background-color: transparent; 
+  border: 2px solid black; 
+  border-radius: 5px; 
+  padding: 8px;
+  width: 200px; 
+  margin: 5px 0; 
   padding-right: 20px;
 }
+
 
 /*housing*/
 .housing-content {
   display: grid;
-  grid-template-columns: max-content 1fr; /* Adjust column widths */
-  gap: 10px; /* Add gap between columns */
-  align-items: center; /* Align items vertically */
+  grid-template-columns: max-content 1fr;
+  gap: 10px; 
+  align-items: center; 
 }
 
 .housing-switch-container {
-  position: absolute; /* Position the switch container absolutely */
-  top: 0; /* Position at the top */
-  right: 0; /* Position at the right */
+  position: absolute; 
+  top: 0;
+  right: 0; 
   display: flex;
   align-items: center;
   margin-top: 40px;
@@ -257,7 +265,7 @@
 }
 
 .housing-switch {
-  margin-left: 10px; /* Add margin between switch and text */
+  margin-left: 10px; 
 }
 
 .housing-content p {
@@ -265,24 +273,24 @@
   font-size: 1.4rem;
   color: white;
   padding-right: 20px;
-  margin: 0; /* Remove default margin */
+  margin: 0; 
 }
 
 .housing-content input[type="text"] {
   font-size: 1.2rem;
   font-weight: bold;
   color: #FFE178;
-  background-color: transparent; /* Make the input box transparent */
-  border: 2px solid black; /* Add blue outline */
-  border-radius: 5px; /* Add border radius for a rounded look */
-  padding: 8px; /* Add padding */
-  width: 200px; /* Set width as needed */
-  margin: 5px 0; /* Add margin */
+  background-color: transparent; 
+  border: 2px solid black; 
+  border-radius: 5px; 
+  padding: 8px;
+  width: 200px;
+  margin: 5px 0; 
 }
 
 .housing-content input[type="text"]:disabled {
-  color: #666; /* Change color of disabled input */
-  border-color: #ccc; /* Change border color of disabled input */
+  color: #666;
+  border-color: #ccc; 
 }
 
 
