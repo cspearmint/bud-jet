@@ -164,10 +164,13 @@
   width: 11%; 
 }
 
-
 .category-item {
-  margin: 15px 0;
+  display: flex;
+  align-items: flex-start; /* Align items to the left */
+  gap: 10px; /* Adjust as needed */
+  padding-top: 20px;
 }
+
 
 .categories-container {
   display: flex;
@@ -208,41 +211,30 @@
   font-size: 1.4rem;
 }
 
-/* groceries catgeory */
-.groceries-date {
+
+/* groceries, tuition, scholarship catgeory */
+.groceries-date, .tuition-date, .scholarship-date {
   font-weight: bold;
   font-size: 1.4rem;
+  margin-right: 10px; 
 }
 
-.groceries-value {
+.groceries-value, .tuition-value, .scholarship-value {
   font-size: 1.2rem;
   font-weight: bold;
   color: #FFE178;
-  background-color: transparent; 
-  border: 2px solid black; 
-  border-radius: 5px; 
+  background-color: transparent;
+  border: 2px solid black;
+  border-radius: 5px;
   padding: 8px;
-  width: 200px; 
-  margin: 5px 0; 
+  width: auto; 
 }
 
-/*housing, tuition, scholarship*/
-.housing-date, .tuition-date, .scholarship-date {
+.category-name {
   font-weight: bold;
   font-size: 1.4rem;
-}
-
-.tuition-value, .scholarship-value {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #FFE178;
-  background-color: transparent; 
-  border: 2px solid black; 
-  border-radius: 5px; 
-  padding: 8px;
-  width: 200px; 
-  margin: 5px 0; 
-  padding-right: 20px;
+  color: #ccc;
+  display: inline; 
 }
 
 
@@ -333,3 +325,33 @@
 .create-btn:hover {
   background-color: #F47C7C; 
 }
+
+/*expense card*/
+.card-backdrop {
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 1000; 
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+
+.card {
+  background-color: #424B54;
+  padding: 20px;
+  border-radius: 8px;
+  z-index: 1001; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  max-width: 500px; 
+  width: 90%; 
+}
+
+.card label {
+  display: flex;
+  flex-direction: column;
+}
+

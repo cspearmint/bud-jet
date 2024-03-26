@@ -4,6 +4,37 @@ import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
 import './main.css';
 
+function ExpenseCard({ isOpen, onClose, onSave }) {
+  const [name, setName] = useState('');
+  const [date, setDate] = useState('');
+  const [amount, setAmount] = useState('');
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="card-backdrop">
+      <div className="card">
+        <h2>Create New Expense</h2>
+        <label>
+          Name of Expense:
+          <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+        </label>
+        <label>
+          Date of Expense:
+          <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+        </label>
+        <label>
+          Amount:
+          <input type="text" value={amount} onChange={(e) => setAmount(e.target.value)} />
+        </label>
+        <button onClick={() => onSave(name, date, amount)}>Save Expense</button>
+        <button onClick={onClose}>Cancel</button>
+      </div>
+    </div>
+  );
+}
+
+
 function Category({ categoryName, items }) {
   const [dormChecked, setDormChecked] = useState(true); 
 
@@ -66,6 +97,22 @@ function Category({ categoryName, items }) {
     setData(newData);
   };
 
+    // card function
+  const [isCardOpen, setIsCardOpen] = useState(false);
+  const handleOpenCard = () => {
+    setIsCardOpen(true);
+  };
+  const handleCloseCard = () => {
+    setIsCardOpen(false);
+  };
+
+  // saves the new expense?
+  const handleSaveExpense = (name, date, amount) => {
+    console.log("Saving Expense:", name, date, amount);
+    handleCloseCard();
+  };
+
+
   return (
     <div className={`${categoryName} category-container`}>
       <h1 className={`${categoryName}-header`}>{categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}</h1>
@@ -92,8 +139,11 @@ function Category({ categoryName, items }) {
         </div>
       ))}
       {(categoryName === 'disposable' || categoryName === 'hobby') && (
-        <Link to="./home.js" className="link-button">
-          <Button variant="contained" style={{
+        <>
+        <Button 
+          onClick={handleOpenCard} 
+          variant="contained" 
+          style={{
             backgroundColor: '#FF684F',
             color: 'white',
             padding: '10px 30px',
@@ -104,12 +154,18 @@ function Category({ categoryName, items }) {
             cursor: 'pointer',
             alignSelf: 'center',
             '&:hover': {
-              backgroundColor: '#F47C7C',
-            },
-          }}>
-            Create New Expense
-          </Button>
-        </Link>
+            backgroundColor: '#F47C7C',
+          }}
+        }
+        >
+          Create New Expense
+        </Button>
+        <ExpenseCard 
+          isOpen={isCardOpen} 
+          onClose={handleCloseCard} 
+          onSave={handleSaveExpense}
+        />
+      </>
       )}
       {categoryName === 'housing' && (
         renderHousing()
