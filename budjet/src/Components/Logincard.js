@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from 'react-router-dom';
 import "./Logincard.css";
 import "./Loginbutton.css";
@@ -8,25 +8,54 @@ import Checkbox from "./Checkbox";
 import Button from '@mui/material/Button'; 
 
 const Logincard = () => {
+        // stores email and password
+        const [email, setEmail] = useState('');
+        const [password, setPassword] = useState('');
+    
+        // update based on user's input
+        const emailChange = (e) => {
+            setEmail(e.target.value);
+        }
+        const passChange = (e) => {
+            setPassword(e.target.value);
+        }
+    
+        // user submits
+        const handleSubmit = (event) => {
+            event.preventDefault(); 
+            console.log("Email: ", email);
+            console.log("Password: ", password);
+        }
+
     return (
         <div className="login_card">
             <div className="login_card-container">
                 <Heading text="Login" />
+                <form onSubmit={handleSubmit}>
                 <div className="login_card-container-text">
                     <p className="login_card-container-text-p1">Don't have an account yet? <Link to="/Signup" className="highlighted-text">Sign up!</Link></p>
                     <div className="login_card-container-text-textboxes">
                         <p className="login_card-container-text-textboxes-p3">Email Address:</p>
-                        <Textbox />
+                        <Textbox 
+                            value={email} 
+                            onChange={(e) => setEmail(e.target.value)}
+                            type="email"
+                            placeholder="Enter your email"
+                        />
                         <p className="login_card-container-text-textboxes-p3">Password:</p>
-                        <Textbox />
+                        <Textbox 
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)} 
+                            type="password"
+                            placeholder="Enter your password"
+                        />
                     </div>
                     <Checkbox />
-                    <Link to="/main">
-                        <Button variant="contained" color="primary" className="button">
+                        <Button type="submit" variant="contained" color="primary" className="button">
                             Login
                         </Button>
-                    </Link>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     );
