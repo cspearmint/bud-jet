@@ -1,32 +1,77 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from 'react-router-dom';
 import "./Logincard.css";
+import "./Loginbutton.css";
 import Heading from "./Heading";
 import Textbox from "./Textbox";
 import Checkbox from "./Checkbox";
-import Loginbutton from "./Loginbutton";
-import { Link } from 'react-router-dom';
-
-/*Fix responsiveness to change in vertical window size*/
+import Button from '@mui/material/Button'; 
 
 const Logincard = () => {
+        // stores email and password
+        const [email, setEmail] = useState('');
+        const [password, setPassword] = useState('');
+    
+        // update based on user's input
+        const emailChange = (e) => {
+            setEmail(e.target.value);
+        }
+        const passChange = (e) => {
+            setPassword(e.target.value);
+        }
+    
+        // user submits
+        const handleSubmit = (event) => {
+            event.preventDefault(); 
+            console.log("Email: ", email);
+            console.log("Password: ", password);
+        }
+
     return (
-        <div className = "login_card">
-            <div className = "login_card-container">
-                <Heading text="Login"></Heading>
-                <div className = "login_card-container-text">
-                    <p className = "login_card-container-text-p1">Don't have an account yet? <Link to="/Signup" class="highlighted-text">Sign up!</Link></p>
-                    <div className = "login_card-container-text-textboxes">
-                        <p className = "login_card-container-text-textboxes-p3">Email Address:</p>
-                        <Textbox />
-                        <p className = "login_card-container-text-textboxes-p3">Password:</p>
-                        <Textbox />
+        <div className="login_card">
+            <div className="login_card-container">
+                <Heading text="Login" />
+                <form onSubmit={handleSubmit}>
+                <div className="login_card-container-text">
+                    <p className="login_card-container-text-p1">Don't have an account yet? <Link to="/Signup" className="highlighted-text">Sign up!</Link></p>
+                    <div className="login_card-container-text-textboxes">
+                        <p className="login_card-container-text-textboxes-p3">Email Address:</p>
+                        <Textbox 
+                            value={email} 
+                            onChange={(e) => setEmail(e.target.value)}
+                            type="email"
+                            placeholder="Enter your email"
+                        />
+                        <p className="login_card-container-text-textboxes-p3">Password:</p>
+                        <Textbox 
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)} 
+                            type="password"
+                            placeholder="Enter your password"
+                        />
                     </div>
-                    <Checkbox />
-                    <Loginbutton text="Login" />
-                </div>
+                        <Button type="submit" variant="contained" style={{
+                            backgroundColor: '#FF684F',
+                            color: 'white',
+                            width: '100%',
+                            padding: '10px 30px',
+                            fontSize: '1.2rem',
+                            fontWeight: 'bold',
+                            borderRadius: '15px',
+                            marginTop: '10px',
+                            cursor: 'pointer',
+                            alignSelf: 'center',
+                            '&:hover': {
+                            backgroundColor: '#F47C7C',
+                            },
+                        }}>
+                            Login
+                        </Button>
+                    </div>
+                </form>
             </div>
-        </div>      
-);
-  };
-  
-  export default Logincard;
+        </div>
+    );
+};
+
+export default Logincard;

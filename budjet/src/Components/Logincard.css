@@ -8,6 +8,7 @@
     /*border: 5px solid #424B54; */
     /*border-radius: 30px*/
   }
+  
 
   .login_card-container{
     padding: 3rem;
@@ -48,3 +49,11 @@
  .login_card-container-text-link{
     display: inline-block
  }
+
+ .login_card-container-text-textboxes-p3 {
+  width: 150px; /* Adjust the width as needed */
+  text-align: left; /* Align the text to the left */
+  margin-right: 20px; /* Add some margin to separate it from the text box */
+}
+
+

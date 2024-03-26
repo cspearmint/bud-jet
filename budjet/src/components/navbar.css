@@ -1,0 +1,92 @@
+.nav-container {
+    margin-top: 100px; /* Adjust margin-top as needed */
+    margin-left: 25px;
+    padding: 2rem 1.5rem; /* Adjust padding to create space around the content */
+    width: 374px;
+    height: 1000px; /* Remove fixed height */
+    background: 24B54;
+    border: 3px solid #FFFFFF;
+    background-color: #424B54;
+    border-radius: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2rem;
+}
+.user-con {
+    height: 150px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-con img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #fcf6f9;
+    border: 2px solid #FFFFFF;
+    padding: 1rem;
+    box-shadow: 0px 1px 17px rgba(0, 0, 0, 0.06);
+}
+
+.user-con h2 {
+    color: white;
+    font-size: 2rem;
+}
+
+.user-con p {
+    color: white;
+    font-size: 2rem;
+}
+
+.menu-items {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0; /* Remove left padding */
+    margin-top: -600px; /* Adjust margin-top as needed */
+}
+
+.menu-items li {
+    display: grid;
+    align-items: center;
+    margin: .5rem 0; /* Adjust margin as needed */
+    font-weight: 500;
+    cursor: pointer;
+    color: white;
+    padding-left: 1rem;
+    position: relative;
+    font-size: 1.2rem;
+    transition: border-bottom .3s ease-in-out; /* Smooth transition for the underline effect */
+
+    /* Add a bottom border initially */
+    border-bottom: 2px solid transparent;
+}
+
+.menu-items li:hover {
+    /* Change the color of the bottom border on hover */
+    border-bottom: 2px solid #FF684F;
+    width: 10%; /* Adjust the width of the underline effect */
+}
+
+
+
+.active {
+    color: rgba(34, 34, 96, 1) !important;
+}
+
+.active i {
+    color: rgba(34, 34, 96, 1) !important;
+}
+
+.active::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: #222260;
+    border-radius: 0 10px 10px 0;
+}
