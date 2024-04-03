@@ -215,11 +215,13 @@ TODO:
 
 /*housing*/
 .housing-content {
+  /*
   display: grid;
   grid-template-columns: max-content 1fr;
   gap: 10px; 
-  align-items: center; 
+  align-items: center;  */
 }
+
 
 .housing-switch-container {
   position: absolute; 
@@ -265,12 +267,6 @@ TODO:
   font-size: 2rem;
   font-weight: bold;
   margin-top: 80px;
-}
-
-.checkbox-container {
-  position: absolute;
-  bottom: 30px;
-  right: 30px;
 }
 
 .checkbox-label {
@@ -330,3 +326,66 @@ TODO:
   flex-direction: column;
 }
 
+.dormcard-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.out-pocket-container{
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 1rem;
+  align-items: center;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.out-pocket-container span {
+  color: #FFE178;
+}
+
+.apartmentcard-container{
+  padding-top: 2rem;
+  display: grid;
+  grid-template-columns: 0.5fr 1fr; /* 2 equal columns */
+  grid-template-rows: 1fr 1fr 1fr; /* 3 equal rows */
+  gap: 0px; /* Optional gap between items */
+  align-items: center;
+  justify-items: start;
+  font-weight: bold;
+  font-size: 24px;;
+}
+
+.item {
+  /* Additional styling for each item */
+  padding-bottom: 1rem;
+}
+
+.housing-container-relative{
+  height: 100%;
+  position: relative;
+}
+
+.checkbox-container {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+}
+
+.gts-container{
+  display: grid;
+  grid-template-columns: 1fr 0.5fr; /* 2 equal columns */
+  grid-template-rows: 1fr;
+  align-items: center;
+  justify-items: start;
+}
+
+.newexpense-container{
+  flex-grow: 1;
+  align-items: flex-end;
+  display: flex;
+  justify-content: center;
+}
