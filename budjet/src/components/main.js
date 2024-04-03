@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
+import Heading from "./Heading"
 import './main.css';
 
 function ExpenseCard({ isOpen, onClose, onSave }) {
@@ -115,7 +116,8 @@ function Category({ categoryName, items }) {
 
   return (
     <div className={`${categoryName} category-container`}>
-      <h1 className={`${categoryName}-header`}>{categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}</h1>
+        <Heading text = {categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}></Heading>
+      
       {items.map((item, index) => (
         <div className='category-item' key={index}>
           {categoryName === 'groceries' || categoryName === 'tuition' || categoryName === 'scholarship' ? (
@@ -227,7 +229,7 @@ function Main() {
 
   const renderStats = () => (
     <div className="current-stats">
-      <div className="stats-title">Current Monthly Stats</div>
+      <Heading text = "Current Monthly Stats"></Heading>
       <div className="stats-overview">
         <div className="total-spending">
           <div className="total-text">
@@ -250,11 +252,12 @@ function Main() {
 
   return (
     <div className="main">
-      <header className="main-header">
-        BudJet
-      </header>
+      <div className = "main-header-container">
+        <p>BudJet</p>
+      </div>
       <div className="stats-container">
         {renderStats()}
+      </div>
         <div className="categories-container">
           <div className="category-group">
             <Category categoryName="disposable" items={categoriesData.disposable} />
@@ -270,7 +273,7 @@ function Main() {
           </div>
         </div>
       </div>
-    </div>
+    
   );
 }
 

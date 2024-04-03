@@ -1,52 +1,57 @@
 
 .signupcard {
-    background-color: #424B54;
-    width: 95%;
-    height: 82%;
-    margin-left: 50px;
-    display: flex;
-    /*border: 5px solid #424B54; */
-    /*border-radius: 30px*/
-  }
+  background-color: #424B54;
+  width: 95%;
+  height: 82%;
+  margin-left: 50px;
+  display: flex;
+  /*border: 5px solid #424B54; */
+  border-radius: 20px
+}
 
-  .signupcard-container{
-    padding: 3rem;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
+.signupcard-container{
+  padding: 3rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
 
-  .signupcard-container-text{
-    font-size: 24;
-    font-weight: bold;
-    color: white;
-    flex: 1;
+.signupcard-container-heading{
+  display: flex;
+  justify-content: center;
+}
 
-    display: flex;
-    flex-direction: column;
-  
-  }
+.signupcard-container-text{
+  font-size: 24;
+  font-weight: bold;
+  color: white;
+  flex: 1;
 
-  .signupcard-container-text-p1 {
-    padding-bottom: 1.5rem;
-    padding-top: 1rem;
-    margin: 0;
-  }
+  display: flex;
+  flex-direction: column;
 
-  .highlighted-text {
-    padding-top: 1.5rem;
-    color: #FFE178;
-    display: inline-block; /* Place paragraphs on the same line */
-  }
+}
 
-  .signupcard-container-text-textboxes{
-    padding-top: 0.5rem;
-    display: flex;
-    flex-direction: column;
-  }
+.signupcard-container-text-p1 {
+  padding-bottom: 1.5rem;
+  padding-top: 1rem;
+  margin: 0;
+}
 
-  .signupcard-container-text-textboxes-p3 {
-    width: 150px; 
-    text-align: left; 
-    margin-right: 20px; 
-  }
+.highlighted-text {
+  padding-top: 1.5rem;
+  color: #FFE178;
+  display: inline-block; /* Place paragraphs on the same line */
+}
+
+.signupcard-container-text-textboxes{
+  padding-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.signupcard-container-text-textboxes-p3 {
+  width: 150px; 
+  text-align: left; 
+  margin-right: 20px; 
+}

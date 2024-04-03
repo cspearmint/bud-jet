@@ -4,11 +4,12 @@
     color: white;
     padding: 0;
     margin: 0;
+    display: flex;
+    justify-content: flex-start;
 }
 
 .heading-container-large-contents{
     display: inline-block; /* Make the container hug its text contents */
-    padding-top: 0.5rem;
     margin: 0;
 }
 
