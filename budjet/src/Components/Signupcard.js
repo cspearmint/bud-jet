@@ -40,7 +40,10 @@ const Signupcard = () => {
     return (
         <div className="signupcard">
             <div className="signupcard-container">
-                <Heading text="Sign Up" />
+                <div className = "signupcard-container-heading">
+                    <Heading text="Sign Up" />
+                </div>
+                
                 <form onSubmit={handleSubmit}>
                     <div className="signupcard-container-text">
                         <p className="login_card-container-text-p1">Already have an account? <Link to="/Login" className="highlighted-text">Login</Link></p>
