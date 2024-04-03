@@ -73,10 +73,10 @@ a placeholder data entry in the Data collection with their user ID
 being the way to access this info.
 
 Returns:
-0 if account created successfully
-1 if username does not meet constraints
-2 if password does not meet constraints
-3 if username is already taken or if other problem occurs
+200 if account created successfully
+400 if username does not meet constraints
+400 if password does not meet constraints
+500 if username is already taken or if other problem occurs
 */
 async function createUser(username, password) {
     // connects to database
@@ -85,14 +85,14 @@ async function createUser(username, password) {
     if (!verifyUsername(username)) {
         // disconnects before returning
         await disconnectFromMongoDB();
-        return 1;
+        return 400;
     }
 
     // returns error code if password isn't sufficient
     else if (!verifyPassword(password)) {
         // disconnects before returning
         await disconnectFromMongoDB();
-        return 2;
+        return 400;
     }
 
     try {
@@ -118,14 +118,14 @@ async function createUser(username, password) {
         console.error("Username is already in use!", err);
         // disconnects before returning
         await disconnectFromMongoDB();
-        return 3;
+        return 500;
     }
 
     // if this code is reached, then user is created, so their entry in Data is created
     await client.db("BudJet").collection("Data").insertOne({ cookie: cookie, data: [ 1, 2, 3 ] });
     // disconnects before returning
     await disconnectFromMongoDB();
-    return 0;
+    return 200;
 }
 
 /*
@@ -227,3 +227,5 @@ async function main() {
 
 main();
 */
+
+module.exports = { createUser, getLoginCookie, getData };
