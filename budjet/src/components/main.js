@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
+import Heading from "./Heading"
 import './main.css';
 
 function ExpenseCard({ isOpen, onClose, onSave }) {
@@ -41,13 +42,14 @@ function ExpenseCard({ isOpen, onClose, onSave }) {
 
 
 function Category({ categoryName, items }) {
-  const [dormChecked, setDormChecked] = useState(true); 
 
-  const renderHousing = () => {
+  const [dormChecked, setDormChecked] = useState(true); //sets dormChecked to true and declares setDormChecked as function to update its value
+
+  const renderHousing = () => { //function that returns UI wrapped in housing-content container
     return (
       <div className="housing-content">
         <div className="housing-switch-container">
-          <p className="switch-option">{dormChecked ? "Dorm" : "Apartment"}</p>
+          <p className="switch-option">{dormChecked ? "Dorm" : "Apartment"}</p> {/*p next to switch, if dormChecked true, then p = "Dorm"*/}
           <Switch
             checked={dormChecked}
             onChange={handleSwitchChange}
@@ -62,29 +64,28 @@ function Category({ categoryName, items }) {
           />
         </div>
         {dormChecked ? (
-          <>
-            <p>Semester Cost:</p>
+          <div className = "dormcard-container">
+            <p>Semester Cost :</p>
             <input type="text" placeholder="Semester Cost" />
-            <p>Scholarship:</p>
-            <input type="text" placeholder="Scholarship" />
-          </>
+          </div>
         ) : (
-          <>
-            <p>Rent:</p>
-            <input type="text" placeholder="Monthly Rent" />
-            <p>Utilities:</p>
-            <input type="text" placeholder="Utilities" />
-            <p>Total:</p>
-            <input type="text" placeholder="Total" disabled />
-          </>
+          <div className = "apartmentcard-container">
+            <div class="item">Rent :</div>
+            <div class="item"><input type="text" placeholder="Monthly Rent" /></div>
+            <div class="item">Utilities :</div>
+            <div class="item"><input type="text" placeholder="Monthly Utilities" /></div>
+            <div class="item">Total :</div>
+            <div class="item"><input type="text" placeholder="Total" disabled /></div>
+          </div>
         )}
         <div className="out-pocket-container">
-          <p>Out of Pocket:</p>
-          <div className="checkbox-container">
-            <input type="checkbox" id="paid-checkbox" name="paid-checkbox" />
-            <label htmlFor="paid-checkbox" className="checkbox-label">Paid</label>
-          </div>
+          <p>Out of Pocket: <span>$some</span></p>
         </div>
+        <div className="checkbox-container">
+          <input type="checkbox" id="paid-checkbox" name="paid-checkbox" />
+          <label htmlFor="paid-checkbox" className="checkbox-label">Paid</label>
+        </div>
+          
       </div>
     );
   };
@@ -120,12 +121,13 @@ function Category({ categoryName, items }) {
 
   return (
     <div className={`${categoryName} category-container`}>
-      <h1 className={`${categoryName}-header`}>{categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}</h1>
+        <Heading text = {categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}></Heading>
+      
       {items.map((item, index) => (
         <div className='category-item' key={index}>
           {categoryName === 'groceries' || categoryName === 'tuition' || categoryName === 'scholarship' ? (
-            <>
-              <span className={`${categoryName}-date`}>{item.date}</span> ~ <span>{item.item}</span>:
+            <div className = "gts-container">
+              <span className={`${categoryName}-date`}>{item.date} :</span>
               <input
                 type="text"
                 placeholder="$  --  "
@@ -133,7 +135,7 @@ function Category({ categoryName, items }) {
                 onChange={(e) => handleInputChange(index, e.target.value)}
                 className={`category-value ${categoryName}-value`}
               />
-            </>
+            </div>
           ) : (
             <>
               <span className={`${categoryName}-name`}>{item.date}</span> ~
@@ -144,33 +146,32 @@ function Category({ categoryName, items }) {
         </div>
       ))}
       {(categoryName === 'disposable' || categoryName === 'hobby') && (
-        <>
-        <Button 
-          onClick={handleOpenCard} 
-          variant="contained" 
-          style={{
-            backgroundColor: '#FF684F',
-            color: 'white',
-            padding: '10px 30px',
-            fontSize: '1.2rem',
-            fontWeight: 'bold',
-            borderRadius: '15px',
-            marginTop: '10px',
-            cursor: 'pointer',
-            alignSelf: 'center',
-            '&:hover': {
-            backgroundColor: '#F47C7C',
-          }}
-        }
-        >
-          Create New Expense
-        </Button>
-        <ExpenseCard 
-          isOpen={isCardOpen} 
-          onClose={handleCloseCard} 
-          onSave={handleSaveExpense}
-        />
-      </>
+        <div className = 'newexpense-container'>
+          <div className = 'newexpensebutton-container'>
+            <Button 
+              onClick={handleOpenCard} 
+              variant="contained" 
+              style={{
+                backgroundColor: '#FF684F',
+                color: 'white',
+                padding: '10px 30px',
+                fontSize: '1.2rem',
+                fontWeight: 'bold',
+                borderRadius: '15px',
+                marginTop: '10px',
+                cursor: 'pointer',
+                alignSelf: 'center',
+                '&:hover': {
+                backgroundColor: '#F47C7C',}}}>
+              Create New Expense
+            </Button>
+          </div>
+          <ExpenseCard 
+            isOpen={isCardOpen} 
+            onClose={handleCloseCard} 
+            onSave={handleSaveExpense}
+          />
+      </div>
       )}
       {categoryName === 'housing' && (
         renderHousing()
@@ -178,11 +179,13 @@ function Category({ categoryName, items }) {
 
       {(categoryName === 'tuition' || categoryName === 'scholarship') && (
         <>
-          <p className={`outPocket`}>Out of pocket:</p>
-          <div className="checkbox-container">
-            <input type="checkbox" id={`${categoryName}-checkbox`} name={`${categoryName}-checkbox`} />
-            <label htmlFor={`${categoryName}-checkbox`} className="checkbox-label">Paid</label>
-          </div>
+        <div className="out-pocket-container">
+          <p>Out of Pocket: <span>$some</span></p>
+        </div>
+        <div className="checkbox-container">
+          <input type="checkbox" id="paid-checkbox" name="paid-checkbox" />
+          <label htmlFor="paid-checkbox" className="checkbox-label">Paid</label>
+        </div>
         </>
       )}
     </div>
@@ -232,7 +235,7 @@ function Main() {
 
   const renderStats = () => (
     <div className="current-stats">
-      <div className="stats-title">Current Monthly Stats</div>
+      <Heading text = "Current Monthly Stats"></Heading>
       <div className="stats-overview">
         <div className="total-spending">
           <div className="total-text">
@@ -243,7 +246,7 @@ function Main() {
         <div className="categories-summary">
           {Object.entries(stats).filter(([key]) => key !== 'total').map(([category, value], index) => (
             <div className="category-stat" key={index}>
-              <span className="category-name">{category.charAt(0).toUpperCase() + category.slice(1)}:</span>
+              <span className="category-name">{category.charAt(0).toUpperCase() + category.slice(1)} : </span>
             </div>
           ))}
         </div>
@@ -255,11 +258,12 @@ function Main() {
 
   return (
     <div className="main">
-      <header className="main-header">
-        BudJet
-      </header>
+      <div className = "main-header-container">
+        <p>BudJet</p>
+      </div>
       <div className="stats-container">
         {renderStats()}
+      </div>
         <div className="categories-container">
           <div className="category-group">
             <Category categoryName="disposable" items={categoriesData.disposable} />
@@ -275,7 +279,7 @@ function Main() {
           </div>
         </div>
       </div>
-    </div>
+    
   );
 }
 

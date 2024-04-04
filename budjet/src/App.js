@@ -3,11 +3,11 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import "@fontsource/inter"; 
 import "@fontsource/inter/400.css"; 
 import './App.css';
-import Login from "./components/Login";
-import Signup from "./components/Signup";
-import Home from './components/home.js'; 
-import Main from './components/main.js';
-import Navbar from './components/navbar.js'; 
+import Login from "./Components/Login";
+import Signup from "./Components/Signup";
+import Home from './Components/home.js'; 
+import Main from './Components/main.js';
+import Navbar from './Components/navbar.js'; 
 
 function App() {
   return (

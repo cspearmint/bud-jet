@@ -30,7 +30,9 @@ const Logincard = () => {
     return (
         <div className="login_card">
             <div className="login_card-container">
-                <Heading text="Login" />
+                <div className = "login_card-container-heading">
+                    <Heading text="Login" />
+                </div>
                 <form onSubmit={handleSubmit}>
                 <div className="login_card-container-text">
                     <p className="login_card-container-text-p1">Don't have an account yet? <Link to="/Signup" className="highlighted-text">Sign up!</Link></p>
@@ -75,3 +77,4 @@ const Logincard = () => {
 };
 
 export default Logincard;
+

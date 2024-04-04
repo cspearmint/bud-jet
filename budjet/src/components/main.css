@@ -1,51 +1,59 @@
+/*
+TODO:
+-fix width on resizing
+
+*/
+
 .main {
-  font-family: 'Arial', sans-serif;
   color: white;
-  background-color: #333;
+  background-color: #1F272A;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
-.main-header {
-  background-color: #222;
-  padding: 20px;
-  padding-left: 50px;
+.main-header-container {
+  background-color: #0c1011;
   width: 100%;
-  text-align: left;
   font-size: 24px;
   font-weight: bold;
+  display: flex;
+  justify-content: flex-start;
+  border-bottom: 3px solid #FFE178
+}
+
+.main-header-container p {
+  padding-left: 1rem;
+
 }
 
 .stats-container {
-  display: flex;
-  flex-direction: column; /* stack them vertically */
-  align-items: center; 
-  padding: 30px;
+  padding-left: 4rem;
+  padding-right: 4rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 }
 
-.stats-title {
-  color: white;
-  font-weight: bold;
-  margin-top: 20px;
-  margin-left: 20px;
-  padding-bottom: 10px; 
-  font-size: 2rem;
-  position: relative;
-  display: inline-block;
-  border-bottom: 2px solid #FF684F;
+.current-stats {
+  padding: 1rem;
+  background-color: #424B54;
+  border-radius: 8px;
+}
+
+.stats-overview {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .total-text {
   font-size: 1.5rem;
-  margin-top: 80px; 
-}
+  padding-top: 6rem;
+  font-weight: bold}
 
 .total-spending {
   margin-left: 30px; 
 }
-
 
 
 .category {
@@ -56,30 +64,6 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   position: relative;
 }
-
-
-.current-stats {
-  background-color: #424B54;
-  border-radius: 8px;
-  padding: 10px;
-  width: 100%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-  display: flex;
-  font-size: 1.5rem;
-  justify-content: space-between; 
-  position: relative;
-  display: inline-block;
-  border-bottom: 2px solid #FF684F; 
-}
-
-.stats-overview {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-
 
 
 .categories-summary {
@@ -104,7 +88,7 @@
 .category-name {
   font-weight: bold;
   font-size: 1.4rem;
-  color: #ccc;
+  color: white;
   
 }
 
@@ -147,41 +131,35 @@
 .scholarship {
   background-color: #424B54;
   border-radius: 20px;
-  margin: 20px;
-  padding: 20px;
+  padding: 1rem;
   flex: 2; 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   position: relative;
-  display: inline-block;
-  border-bottom: 2px solid #FF684F; 
-  width: 10%; 
+  
 }
 
-.disposable h1, .hobby h1, .groceries h1, .housing h1, .tuition h1, .scholarship h1{
-  position: relative;
-  display: inline-block;
-  border-bottom: 2px solid #FF684F; 
-  width: 11%; 
-}
 
 .category-item {
   display: flex;
   align-items: flex-start; /* Align items to the left */
   gap: 10px; /* Adjust as needed */
-  padding-top: 20px;
+  padding-top: 1.5rem;
 }
 
 
 .categories-container {
   display: flex;
   flex-wrap: wrap; 
-  justify-content: center; 
+  justify-content: space-between; 
+  padding-left: 4rem;
+  padding-right: 4rem;
 }
 
 .category-group {
   flex-basis: 100%; 
-  margin: 5px;
   display: flex; 
+  gap: 3rem;
+  padding-bottom: 3rem;
 }
 
 /* adding expensens categories */
@@ -189,9 +167,6 @@
 /* disposable Category */
 .disposable, .groceries, .hobby, .tuition, .scholarship, .housing{
   background-color: #424B54;
-  border-radius: 20px;
-  margin: 20px;
-  padding: 20px;
   flex: 2; 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -233,18 +208,20 @@
 .category-name {
   font-weight: bold;
   font-size: 1.4rem;
-  color: #ccc;
+  color: white;
   display: inline; 
 }
 
 
 /*housing*/
 .housing-content {
+  /*
   display: grid;
   grid-template-columns: max-content 1fr;
   gap: 10px; 
-  align-items: center; 
+  align-items: center;  */
 }
+
 
 .housing-switch-container {
   position: absolute; 
@@ -290,12 +267,6 @@
   font-size: 2rem;
   font-weight: bold;
   margin-top: 80px;
-}
-
-.checkbox-container {
-  position: absolute;
-  bottom: 30px;
-  right: 30px;
 }
 
 .checkbox-label {
@@ -410,3 +381,66 @@
 }
 
 
+.dormcard-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.out-pocket-container{
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 1rem;
+  align-items: center;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.out-pocket-container span {
+  color: #FFE178;
+}
+
+.apartmentcard-container{
+  padding-top: 2rem;
+  display: grid;
+  grid-template-columns: 0.5fr 1fr; /* 2 equal columns */
+  grid-template-rows: 1fr 1fr 1fr; /* 3 equal rows */
+  gap: 0px; /* Optional gap between items */
+  align-items: center;
+  justify-items: start;
+  font-weight: bold;
+  font-size: 24px;;
+}
+
+.item {
+  /* Additional styling for each item */
+  padding-bottom: 1rem;
+}
+
+.housing-container-relative{
+  height: 100%;
+  position: relative;
+}
+
+.checkbox-container {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+}
+
+.gts-container{
+  display: grid;
+  grid-template-columns: 1fr 0.5fr; /* 2 equal columns */
+  grid-template-rows: 1fr;
+  align-items: center;
+  justify-items: start;
+}
+
+.newexpense-container{
+  flex-grow: 1;
+  align-items: flex-end;
+  display: flex;
+  justify-content: center;
+}
