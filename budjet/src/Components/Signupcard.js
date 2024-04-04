@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { Link } from 'react-router-dom';
 import "./Signupcard.css";
 import Heading from "./Heading";
@@ -31,10 +32,24 @@ const Signupcard = () => {
     }
 
     // user submits
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault(); 
         console.log("Email: ", email);
         console.log("Password: ", password);
+	try {
+		const response = await axios.post('http://localhost:3001/createuser', {
+                    username: email,
+                    password: password
+                });
+                console.log('Sign-up successful:', response.data);
+		
+		//Redirect to login page
+		window.location.href = '/login';
+            } catch (error) {
+                console.error('Sign-up failed:', error);
+                // Handle login failure
+            }
+
     }
 
     return (

@@ -1,10 +1,15 @@
 // server file to handle requests
 const express = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const { createUser, getLoginCookie, getData } = require('./dbFunctions'); // importing database functions
 
 const app = express();
 const PORT = 3001;
+
+app.use(cors({
+  origin: 'http://localhost:3000',
+}));
 
 app.use(bodyParser.json());
 
