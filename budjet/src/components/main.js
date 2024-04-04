@@ -25,14 +25,19 @@ function ExpenseCard({ isOpen, onClose, onSave }) {
         </label>
         <label>
           Amount:
-          <input type="text" value={amount} onChange={(e) => setAmount(e.target.value)} />
+          <input 
+            type="text" 
+            value={amount} 
+            onChange={(e) => setAmount(e.target.value)}
+            placeholder="$  --  "  
+          />
         </label>
         <button onClick={() => onSave(name, date, amount)}>Save Expense</button>
         <button onClick={onClose}>Cancel</button>
       </div>
     </div>
   );
-}
+  }  
 
 
 function Category({ categoryName, items }) {

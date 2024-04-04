@@ -341,17 +341,72 @@
 }
 
 .card {
-  background-color: #424B54;
+  background-color: #1F272A;
   padding: 20px;
   border-radius: 8px;
-  z-index: 1001; 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-  max-width: 500px; 
+  max-width: 500px;
   width: 90%; 
-}
-
-.card label {
   display: flex;
   flex-direction: column;
 }
+
+.card {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: white;
+  padding-right: 20px;
+  margin: 0; 
+}
+.card h2 {
+  position: relative; 
+  display: inline-block; 
+  padding-bottom: 5px; 
+  margin-bottom: 20px;
+}
+
+.card h2::after {
+  content: ""; 
+  position: absolute; 
+  left: 0; 
+  bottom: 0; 
+  height: 1px; 
+  width: 100%; 
+  background-color: #FF684F; 
+}
+
+.card label {
+  display: flex; 
+  flex-direction: row; 
+  align-items: center; 
+  margin-bottom: 20px; 
+  justify-content: space-between;
+}
+
+.card input[type="text"], 
+.card input[type="date"] {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #FFE178;
+  background-color: transparent; 
+  border: 2px solid black; 
+  border-radius: 5px; 
+  padding: 8px;
+  width: 50%;
+}
+
+
+.card button {
+  background-color: #FF684F; 
+  color: white;
+  padding: 6px 15px;
+  font-size: 1.0rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 15px;
+  margin-top: 10px;
+  cursor: pointer;
+  align-self: center; 
+}
+
 
