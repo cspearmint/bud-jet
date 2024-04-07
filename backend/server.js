@@ -2,7 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const { createUser, getLoginCookie, getData } = require('./dbFunctions'); // importing database functions
+const { createUser, getLoginCookie, getData, setData } = require('./dbFunctions'); // importing database functions
 
 const app = express();
 const PORT = 3001;
@@ -61,6 +61,25 @@ app.post('/query', async (req, res) => {
   }
 
 });
+
+// idk if this works yet but looks good to me :) -Cody
+// Endpoint for handling data modification requests
+app.post('/setquery', async (req, res) => {
+  // cookie is the user ID and field is the requested field (such as monthly income)
+  const { cookie, field, val } = req.body;
+
+  // calls getdata function
+  const data = await setData(cookie, field, val);
+
+  // Respond with the result (true if successful, otherwise code 500 sent)
+  if (data === false) {
+    res.sendStatus(500);
+  } else {
+    res.status(200).send(data);
+  }
+
+});
+
 
 // Status
 app.listen(PORT, () => {
