@@ -141,8 +141,8 @@ TODO:
 
 .category-item {
   display: flex;
-  align-items: flex-start; /* Align items to the left */
-  gap: 10px; /* Adjust as needed */
+  align-items: flex-start;
+  gap: 10px; 
   padding-top: 1.5rem;
 }
 

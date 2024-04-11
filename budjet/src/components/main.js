@@ -5,10 +5,20 @@ import Switch from '@mui/material/Switch';
 import Heading from "./Heading"
 import './main.css';
 
+//creates a new expense
 function ExpenseCard({ isOpen, onClose, onSave }) {
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
   const [amount, setAmount] = useState('');
+
+  //saves expense info & resets
+  const saveButton = () => {
+    onSave(name, date, amount);
+    setName('');
+    setDate('');
+    setAmount('');
+    onClose();
+  }
 
   if (!isOpen) return null;
 
@@ -33,16 +43,15 @@ function ExpenseCard({ isOpen, onClose, onSave }) {
             placeholder="$  --  "  
           />
         </label>
-        <button onClick={() => onSave(name, date, amount)}>Save Expense</button>
+        <button onClick={saveButton}>Save Expense</button>
         <button onClick={onClose}>Cancel</button>
       </div>
     </div>
   );
   }  
 
-
-function Category({ categoryName, items }) {
-
+//specific category component
+function Category({ categoryName, items, onAddExpense }) {
   const [dormChecked, setDormChecked] = useState(true); //sets dormChecked to true and declares setDormChecked as function to update its value
 
   const renderHousing = () => { //function that returns UI wrapped in housing-content container
@@ -90,7 +99,6 @@ function Category({ categoryName, items }) {
     );
   };
   
-
   const handleSwitchChange = () => {
     setDormChecked(!dormChecked);
   };
@@ -112,9 +120,11 @@ function Category({ categoryName, items }) {
     setIsCardOpen(false);
   };
 
-  // saves the new expense?
+  // saves the new expense in category container 
   const handleSaveExpense = (name, date, amount) => {
     console.log("Saving Expense:", name, date, amount);
+    const newExpense = { date, item: name, cost: amount };
+    onAddExpense(categoryName, newExpense);
     handleCloseCard();
   };
 
@@ -169,7 +179,7 @@ function Category({ categoryName, items }) {
           <ExpenseCard 
             isOpen={isCardOpen} 
             onClose={handleCloseCard} 
-            onSave={handleSaveExpense}
+            onSave={(name, date, amount) => handleSaveExpense(name, date, amount)}
           />
       </div>
       )}
@@ -203,7 +213,7 @@ function Main() {
     scholarship: '$500,000'
   };
 
-  const categoriesData = {
+  const [categoriesData, setCategoriesData] = useState({
     disposable: [
       { date: '2/8/24', item: 'coffee', cost: '$4.76' },
       { date: '2/7/24', item: 'clothes', cost: '$20.52' },
@@ -231,6 +241,13 @@ function Main() {
       { date: 'Lab/Class Fees', cost: '' },
       { date: 'Housing', cost: '' },
     ]
+  });
+  
+    const addExpense = (categoryName, newExpense) => {
+    setCategoriesData(prevCategories => ({
+      ...prevCategories,
+      [categoryName]: [...prevCategories[categoryName], newExpense]
+    }));
   };
 
   const renderStats = () => (
@@ -258,29 +275,29 @@ function Main() {
 
   return (
     <div className="main">
-      <div className = "main-header-container">
+      <div className="main-header-container">
         <p>BudJet</p>
       </div>
       <div className="stats-container">
         {renderStats()}
       </div>
-        <div className="categories-container">
-          <div className="category-group">
-            <Category categoryName="disposable" items={categoriesData.disposable} />
-            <Category categoryName="groceries" items={categoriesData.groceries} />
-          </div>
-          <div className="category-group">
-            <Category categoryName="hobby" items={categoriesData.hobby} />
-            <Category categoryName="housing" items={categoriesData.housing} />
-          </div>
-          <div className="category-group">
-            <Category categoryName="tuition" items={categoriesData.tuition} />
-            <Category categoryName="scholarship" items={categoriesData.scholarship} />
-          </div>
+      <div className="categories-container">
+        <div className="category-group">
+          <Category categoryName="disposable" items={categoriesData.disposable} onAddExpense={addExpense} />
+          <Category categoryName="groceries" items={categoriesData.groceries}/>
+        </div>
+        <div className="category-group">
+          <Category categoryName="hobby" items={categoriesData.hobby} onAddExpense={addExpense} />
+          <Category categoryName="housing" items={categoriesData.housing}/>
+        </div>
+        <div className="category-group">
+          <Category categoryName="tuition" items={categoriesData.tuition}/>
+          <Category categoryName="scholarship" items={categoriesData.scholarship}/>
         </div>
       </div>
-    
+    </div>
   );
+  
 }
 
 export default Main;
