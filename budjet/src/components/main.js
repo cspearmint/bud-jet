@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
@@ -52,6 +52,13 @@ function ExpenseCard({ isOpen, onClose, onSave }) {
 
 //specific category component
 function Category({ categoryName, items, onAddExpense }) {
+  //calculate budgeting formulas
+  const totalExpenses = items.reduce((total, item) => {
+    const itemCost = parseFloat(item.cost.replace(/[$,]/g, ''));
+    return total + (isNaN(itemCost) ? 0 : itemCost);
+  }, 0);
+  const roundedExpenseTotal = `$${totalExpenses.toFixed(2)}`;
+
   const [dormChecked, setDormChecked] = useState(true); //sets dormChecked to true and declares setDormChecked as function to update its value
 
   const renderHousing = () => { //function that returns UI wrapped in housing-content container
@@ -132,6 +139,7 @@ function Category({ categoryName, items, onAddExpense }) {
   return (
     <div className={`${categoryName} category-container`}>
         <Heading text = {categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}></Heading>
+        {/* <div className="category-total">Total: {roundedExpenseTotal}</div> */}
       
       {items.map((item, index) => (
         <div className='category-item' key={index}>
@@ -179,7 +187,7 @@ function Category({ categoryName, items, onAddExpense }) {
           <ExpenseCard 
             isOpen={isCardOpen} 
             onClose={handleCloseCard} 
-            onSave={(name, date, amount) => handleSaveExpense(name, date, amount)}
+            onSave={handleSaveExpense}
           />
       </div>
       )}
@@ -214,10 +222,11 @@ function Main() {
   };
 
   const [categoriesData, setCategoriesData] = useState({
+    
     disposable: [
-      { date: '2/8/24', item: 'coffee', cost: '$4.76' },
-      { date: '2/7/24', item: 'clothes', cost: '$20.52' },
-      { date: '2/6/24', item: 'bike', cost: '$55.55' },
+      { date: '2024-08-24', item: 'coffee', cost: '$4.76' },
+      { date: '2024-07-24', item: 'clothes', cost: '$20.52' },
+      { date: '2024-02-24', item: 'bike', cost: '$55.55' },
     ],
     groceries: [
       { date: 'Week 1', cost: '' },
@@ -226,9 +235,9 @@ function Main() {
       { date: 'Week 4', cost: '' },
     ],
     hobby: [
-      { date: '2/8/24', item: 'paint', cost: '$10.76' },
-      { date: '2/7/24', item: 'paintbrush', cost: '$2.41' },
-      { date: '2/6/24', item: 'canvas', cost: '$5.55' },
+      { date: '2024-08-24', item: 'paint', cost: '$10.76' },
+      { date: '2024-07-17', item: 'paintbrush', cost: '$2.41' },
+      { date: '2024-02-03', item: 'canvas', cost: '$5.55' },
     ],
     housing: [
     ],
@@ -242,13 +251,22 @@ function Main() {
       { date: 'Housing', cost: '' },
     ]
   });
+
+    //checks if expenses being logged 
+    useEffect(() => {
+      console.log("Updated categories data:", categoriesData);
+    }, [categoriesData]);
   
-    const addExpense = (categoryName, newExpense) => {
-    setCategoriesData(prevCategories => ({
-      ...prevCategories,
-      [categoryName]: [...prevCategories[categoryName], newExpense]
-    }));
+  const addExpense = (categoryName, newExpense) => {
+    setCategoriesData(prevCategories => {
+      const updatedCategory = [...prevCategories[categoryName], newExpense];
+      return {
+        ...prevCategories,
+        [categoryName]: updatedCategory
+      };
+    });
   };
+  
 
   const renderStats = () => (
     <div className="current-stats">
