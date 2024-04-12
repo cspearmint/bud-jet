@@ -71,24 +71,14 @@ function ExpenseCard({ isOpen, onClose, onSave }) {
 
 //specific category component
 function Category({ categoryName, items, onAddExpense }) {
-  //calculate budgeting formulas
+  const [budget, setBudget] = useState(250); // holds budget
+  //calculate budget - totalExpenses
   const totalExpenses = items.reduce((total, item) => {
-    const itemCost = parseFloat(item.cost.replace(/[$,]/g, ''));
-    return total + (isNaN(itemCost) ? 0 : itemCost);
+    return total + parseFloat(item.cost.replace(/[$,]/g, '') || 0);
   }, 0);
   const roundedExpenseTotal = `$${totalExpenses.toFixed(2)}`;
-
-
-
-  //max display 3 expenses for disposable & hobby
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleOpenModal = () => setIsModalOpen(true);
-  const handleCloseModal = () => setIsModalOpen(false);
-
-  // Only apply special display logic for disposable and hobby categories
-  const isSpecialCategory = categoryName === 'disposable' || categoryName === 'hobby';
-  const visibleItems = isSpecialCategory ? items.slice(-3) : items; // Show only the last three for special categories
-  const hasMoreItems = isSpecialCategory && items.length > 3;
+  const remainingBudget = budget - totalExpenses;
+  const roundedBudget = `$${remainingBudget.toFixed(2)}`;
 
   const [dormChecked, setDormChecked] = useState(true); //sets dormChecked to true and declares setDormChecked as function to update its value
 
@@ -170,7 +160,12 @@ function Category({ categoryName, items, onAddExpense }) {
   return (
     <div className={`${categoryName} category-container`}>
         <Heading text = {categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}></Heading>
-        {/* <div className="category-total">Total: {roundedExpenseTotal}</div> */}
+        {(categoryName === 'disposable' || categoryName === 'hobby' || categoryName === 'groceries') && (
+      <div className={`category-total ${categoryName}-total totalExpense`}>
+      <div>${budget} - {roundedExpenseTotal} =</div>
+      <div className='remainingBudget'>{roundedBudget}</div>
+      </div>
+    )}
 
       
       {items.map((item, index) => (
