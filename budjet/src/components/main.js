@@ -50,6 +50,25 @@ function ExpenseCard({ isOpen, onClose, onSave }) {
   );
   }  
 
+  //total expense list
+  function ExpenseModal({ isOpen, onClose, items }) {
+    if (!isOpen) return null;
+
+    return (
+        <div className="modal-backdrop">
+            <div className="modal-content">
+                <h2>All Expenses</h2>
+                <ul>
+                    {items.map((item, index) => (
+                        <li key={index}>{item.date} - {item.item}: {item.cost}</li>
+                    ))}
+                </ul>
+                <button onClick={onClose}>Close</button>
+            </div>
+        </div>
+    );
+}
+
 //specific category component
 function Category({ categoryName, items, onAddExpense }) {
   //calculate budgeting formulas
@@ -58,6 +77,18 @@ function Category({ categoryName, items, onAddExpense }) {
     return total + (isNaN(itemCost) ? 0 : itemCost);
   }, 0);
   const roundedExpenseTotal = `$${totalExpenses.toFixed(2)}`;
+
+
+
+  //max display 3 expenses for disposable & hobby
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
+
+  // Only apply special display logic for disposable and hobby categories
+  const isSpecialCategory = categoryName === 'disposable' || categoryName === 'hobby';
+  const visibleItems = isSpecialCategory ? items.slice(-3) : items; // Show only the last three for special categories
+  const hasMoreItems = isSpecialCategory && items.length > 3;
 
   const [dormChecked, setDormChecked] = useState(true); //sets dormChecked to true and declares setDormChecked as function to update its value
 
@@ -140,6 +171,7 @@ function Category({ categoryName, items, onAddExpense }) {
     <div className={`${categoryName} category-container`}>
         <Heading text = {categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}></Heading>
         {/* <div className="category-total">Total: {roundedExpenseTotal}</div> */}
+
       
       {items.map((item, index) => (
         <div className='category-item' key={index}>
@@ -163,7 +195,8 @@ function Category({ categoryName, items, onAddExpense }) {
           )}
         </div>
       ))}
-      {(categoryName === 'disposable' || categoryName === 'hobby') && (
+      {(categoryName === 'disposable' || categoryName === 'hobby') &&(
+        
         <div className = 'newexpense-container'>
           <div className = 'newexpensebutton-container'>
             <Button 
@@ -207,6 +240,7 @@ function Category({ categoryName, items, onAddExpense }) {
         </>
       )}
     </div>
+    
   );
 }
 
@@ -257,15 +291,16 @@ function Main() {
       console.log("Updated categories data:", categoriesData);
     }, [categoriesData]);
   
-  const addExpense = (categoryName, newExpense) => {
-    setCategoriesData(prevCategories => {
-      const updatedCategory = [...prevCategories[categoryName], newExpense];
-      return {
-        ...prevCategories,
-        [categoryName]: updatedCategory
-      };
-    });
-  };
+    const addExpense = (categoryName, newExpense) => {
+      setCategoriesData(prevCategories => {
+        const updatedCategory = [newExpense, ...prevCategories[categoryName]]; // Prepend new expense
+        return {
+          ...prevCategories,
+          [categoryName]: updatedCategory
+        };
+      });
+    };
+    
   
 
   const renderStats = () => (
