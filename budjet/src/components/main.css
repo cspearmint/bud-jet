@@ -210,21 +210,21 @@ TODO:
 }
 
 
-/* groceries, tuition, scholarship catgeory */
-.groceries-date, .tuition-date, .scholarship-date {
+/* groceries, scholarship catgeory */
+.groceries-date, .scholarship-date {
   font-weight: bold;
   font-size: 1.4rem;
   margin-right: 10px; 
 }
 
-.groceries-value, .tuition-value, .scholarship-value {
+.groceries-value, .scholarship-value {
   font-size: 1.2rem;
   font-weight: bold;
   color: #FFE178;
   background-color: transparent;
   border: 2px solid black;
   border-radius: 5px;
-  margin-right: 40px;
+  margin-right: 50px;
   padding: 8px;
   width: auto; 
 }
@@ -404,7 +404,7 @@ TODO:
   align-self: center; 
 }
 
-
+/*housing category*/
 .dormcard-container {
   display: flex;
   justify-content: flex-start;
@@ -424,22 +424,98 @@ TODO:
 
 .out-pocket-container span {
   color: #FFE178;
+  margin-top: 40px;
+  margin-left: 10px;
 }
 
 .apartmentcard-container{
   padding-top: 2rem;
   display: grid;
-  grid-template-columns: 0.5fr 1fr; /* 2 equal columns */
-  grid-template-rows: 1fr 1fr 1fr; /* 3 equal rows */
-  gap: 0px; /* Optional gap between items */
+  grid-template-columns: 0.5fr 1fr; 
+  grid-template-rows: 1fr 1fr 1fr; 
+  gap: 0px; 
   align-items: center;
   justify-items: start;
   font-weight: bold;
   font-size: 24px;;
 }
 
+/*tuition catgegory*/
+.tuition-container{
+  padding-top: 1.5rem;
+  display: grid;
+  grid-template-columns: 0.5fr 1fr; 
+  grid-template-rows: 1fr 1fr 1fr; 
+  gap: 0px; 
+  align-items: center;
+  justify-items: start;
+  font-weight: bold;
+  font-size: 24px;;
+}
+
+.tuition-details input[type="text"] {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #FFE178;
+  background-color: transparent; 
+  border: 2px solid black; 
+  border-radius: 5px; 
+  padding: 8px;
+  width: 200px;
+  margin: 5px 0; 
+  margin-right: 100px;
+}
+
+.tuition-details input[type="text"]:disabled {
+  color: #666;
+  border-color: #ccc; 
+}
+
+.out-tuition-container span {
+  color: #FFE178;
+  margin-top: 40px;
+  margin-left: 10px;
+}
+
+
+/*scholarship catgegory*/
+.scholarship-container{
+  padding-top: 1.5rem;
+  display: grid;
+  grid-template-columns: 0.5fr 1fr; 
+  grid-template-rows: 1fr 1fr 1fr; 
+  gap: 0px; 
+  align-items: center;
+  justify-items: start;
+  font-weight: bold;
+  font-size: 24px;;
+}
+
+.scholarship-details input[type="text"] {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #FFE178;
+  background-color: transparent; 
+  border: 2px solid black; 
+  border-radius: 5px; 
+  padding: 8px;
+  width: 200px;
+  margin: 5px 0; 
+  margin-right: 100px;
+}
+
+.scholarship-details input[type="text"]:disabled {
+  color: #666;
+  border-color: #ccc; 
+}
+
+.out-scholarship-container span {
+  color: #FFE178;
+  margin-top: 40px;
+  margin-left: 10px;
+}
 .item {
-  /* Additional styling for each item */
+
   padding-bottom: 1rem;
 }
 

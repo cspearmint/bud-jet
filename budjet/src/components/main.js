@@ -50,86 +50,150 @@ function ExpenseCard({ isOpen, onClose, onSave }) {
   );
   }  
 
-  //total expense list
-  function ExpenseModal({ isOpen, onClose, items }) {
-    if (!isOpen) return null;
-
-    return (
-        <div className="modal-backdrop">
-            <div className="modal-content">
-                <h2>All Expenses</h2>
-                <ul>
-                    {items.map((item, index) => (
-                        <li key={index}>{item.date} - {item.item}: {item.cost}</li>
-                    ))}
-                </ul>
-                <button onClick={onClose}>Close</button>
-            </div>
-        </div>
-    );
-}
-
 //specific category component
 function Category({ categoryName, items, onAddExpense }) {
   const [budget, setBudget] = useState(250); // holds budget
+
   //calculate budget - totalExpenses
   const totalExpenses = items.reduce((total, item) => {
     return total + parseFloat(item.cost.replace(/[$,]/g, '') || 0);
   }, 0);
   const roundedExpenseTotal = `$${totalExpenses.toFixed(2)}`;
-  const remainingBudget = budget - totalExpenses;
-  const roundedBudget = `$${remainingBudget.toFixed(2)}`;
+  const roundedBudget = `$${(budget - totalExpenses).toFixed(2)}`;
 
   const [dormChecked, setDormChecked] = useState(true); //sets dormChecked to true and declares setDormChecked as function to update its value
+  
+  //HOUSING EXPENSES 
+  const [dormCost, setDormCost] = useState('');
+  const [rent, setRent] = useState('');
+  const [utilities, setUtilities] = useState('');
+  const [outOfPocket, setOutOfPocket] = useState('');
+  const handleSwitchChange = () => setDormChecked(!dormChecked);
 
-  const renderHousing = () => { //function that returns UI wrapped in housing-content container
-    return (
-      <div className="housing-content">
-        <div className="housing-switch-container">
-          <p className="switch-option">{dormChecked ? "Dorm" : "Apartment"}</p> {/*p next to switch, if dormChecked true, then p = "Dorm"*/}
-          <Switch
-            checked={dormChecked}
-            onChange={handleSwitchChange}
-            sx={{
-              '& .MuiSwitch-switchBase.Mui-checked': {
-                color: '#FF684F', 
-              },
-              '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-                backgroundColor: '#FF684F',
-              },
-            }}
+  //TUTION EXPENSES
+  const [tuition, setTuition] = useState('');
+  const [fees, setFees] = useState('');
+  const [tutionOutOfPocket, setTuitionOutOfPocket] = useState('');
+
+  //SCHOLARSHIP EXPENSES
+  const [tuitionScholar, setTuitionScholar] = useState('');
+  const [feesScholar, setFeesScholar] = useState('');
+  const [housingScholar, sethousingScholar] = useState('');
+  const [totalScholar, setTotalScholar] = useState('');
+
+//calculates housing out of pocket 
+const calculateOutOfPocket = () => {
+  if (dormChecked) {
+    setOutOfPocket(parseFloat(dormCost).toFixed(2));
+  } else {
+    const total = parseFloat(rent) + parseFloat(utilities);
+    setOutOfPocket(total.toFixed(2)); 
+  }
+};
+
+//tuition out of pocket
+const calculateTuition = () => {
+  const totalTuitionFees = parseFloat(tuition || 0) + parseFloat(fees || 0);
+  const totalScholarships = parseFloat(tuitionScholar || 0) + parseFloat(feesScholar || 0);
+  const outOfPocket = totalTuitionFees - totalScholarships;
+  setTuitionOutOfPocket(outOfPocket.toFixed(2));  
+};
+
+
+//scholarship total 
+const calculateScholarship = () => {
+  const total = parseFloat(tuitionScholar || 0) + parseFloat(feesScholar || 0) + parseFloat(housingScholar || 0);
+  console.log("Calculating total scholarship:", total); // Log to see if the function is called
+  setTotalScholar(total.toFixed(2));
+}
+
+
+
+
+
+
+const renderHousing = () => {
+  return (
+    <div className="housing-content">
+      <div className="housing-switch-container">
+        <p className="switch-option">{dormChecked ? "Dorm" : "Apartment"}</p>
+        <Switch
+          checked={dormChecked}
+          onChange={handleSwitchChange}
+          sx={{
+            '& .MuiSwitch-switchBase.Mui-checked': {
+              color: '#FF684F', 
+            },
+            '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+              backgroundColor: '#FF684F',
+            },
+          }}
+        />
+      </div>
+      {dormChecked ? (
+        <div className="dormcard-container">
+          <p>Semester Cost:</p>
+          <input
+            type="text"
+            placeholder="Semester Cost"
+            value={dormCost}
+            onChange={e => setDormCost(e.target.value)}
           />
         </div>
-        {dormChecked ? (
-          <div className = "dormcard-container">
-            <p>Semester Cost :</p>
-            <input type="text" placeholder="Semester Cost" />
-          </div>
-        ) : (
-          <div className = "apartmentcard-container">
-            <div class="item">Rent :</div>
-            <div class="item"><input type="text" placeholder="Monthly Rent" /></div>
-            <div class="item">Utilities :</div>
-            <div class="item"><input type="text" placeholder="Monthly Utilities" /></div>
-            <div class="item">Total :</div>
-            <div class="item"><input type="text" placeholder="Total" disabled /></div>
-          </div>
-        )}
-        <div className="out-pocket-container">
-          <p>Out of Pocket: <span>$some</span></p>
+      ) : (
+        <div className="apartmentcard-container">
+          <div className="item">Rent:</div>
+          <input
+            type="text"
+            placeholder="Monthly Rent"
+            value={rent}
+            onChange={e => setRent(e.target.value)}
+          />
+          <div className="item">Utilities:</div>
+          <input
+            type="text"
+            placeholder="Monthly Utilities"
+            value={utilities}
+            onChange={e => setUtilities(e.target.value)}
+          />
+          <div className="item">Total:</div>
+          <input
+            type="text"
+            placeholder="Total"
+            value={parseFloat(rent || 0) + parseFloat(utilities || 0)}
+            disabled
+          />
         </div>
-        <div className="checkbox-container">
-          <input type="checkbox" id="paid-checkbox" name="paid-checkbox" />
-          <label htmlFor="paid-checkbox" className="checkbox-label">Paid</label>
-        </div>
-          
+      )}
+      <div className="out-pocket-container">
+        <Button 
+          onClick={calculateOutOfPocket}
+          variant="contained"
+          style={{
+            backgroundColor: '#FF684F',
+            color: 'white',
+            padding: '5px 15px',
+            fontSize: '1rem',
+            fontWeight: 'bold',
+            borderRadius: '15px',
+            marginTop: '40px',
+            cursor: 'pointer',
+            alignSelf: 'center',
+            '&:hover': { backgroundColor: '#F47C7C'},
+          }}>
+          Calculate Out of Pocket =
+        </Button>
+        <span>{`$${outOfPocket}`}</span>
       </div>
-    );
-  };
+      <div className="checkbox-container">
+        <input type="checkbox" id="paid-checkbox" name="paid-checkbox" />
+        <label htmlFor="paid-checkbox" className="checkbox-label">Paid</label>
+      </div>
+    </div>
+  );
+};
+
   
-  const handleSwitchChange = () => {
-    setDormChecked(!dormChecked);
-  };
 
   const [data, setData] = useState(items.map(item => item.cost));
 
@@ -190,6 +254,7 @@ function Category({ categoryName, items, onAddExpense }) {
           )}
         </div>
       ))}
+
       {(categoryName === 'disposable' || categoryName === 'hobby') &&(
         
         <div className = 'newexpense-container'>
@@ -219,27 +284,142 @@ function Category({ categoryName, items, onAddExpense }) {
           />
       </div>
       )}
+      {categoryName === 'groceries' && (
+        <div className="out-pocket-container">
+        <Button 
+          onClick={calculateTuition}
+          variant="contained"
+          style={{
+            backgroundColor: '#FF684F',
+            color: 'white',
+            padding: '5px 15px',
+            fontSize: '1rem',
+            fontWeight: 'bold',
+            borderRadius: '15px',
+            marginTop: '30px',
+            cursor: 'pointer',
+            alignSelf: 'center',
+            '&:hover': { backgroundColor: '#F47C7C'},
+          }}>
+          Calculate!
+        </Button>
+      </div>
+      )}
+
       {categoryName === 'housing' && (
         renderHousing()
       )}
 
-      {(categoryName === 'tuition' || categoryName === 'scholarship') && (
-        <>
+      {categoryName === 'tuition' ? (
+        <div className="tuition-details">
+        <div className="tuition-container">
+          <div className="item">Tuition w/ Fees:</div>
+          <input
+            type="text"
+            placeholder="Enter Tuition"
+            value={tuition}
+            onChange={e => setTuition(e.target.value)}
+          />
+          <div className="item">Lab/Class Fees:</div>
+          <input
+            type="text"
+            placeholder="Additional fees"
+            value={fees}
+            onChange={e => setFees(e.target.value)}
+          />
+          <div className="item">Total:</div>
+          <input
+            type="text"
+            placeholder="Total"
+            value={parseFloat(tuition || 0) + parseFloat(fees || 0)}
+            disabled
+          />
+        </div>
         <div className="out-pocket-container">
-          <p>Out of Pocket: <span>$some</span></p>
+          <Button 
+            onClick={calculateTuition}
+            variant="contained"
+            style={{
+              backgroundColor: '#FF684F',
+              color: 'white',
+              padding: '5px 15px',
+              fontSize: '1rem',
+              fontWeight: 'bold',
+              borderRadius: '15px',
+              marginTop: '30px',
+              cursor: 'pointer',
+              alignSelf: 'center',
+              '&:hover': { backgroundColor: '#F47C7C'},
+            }}>
+            Calculate Out of Pocket =
+          </Button>
+          <span>{`$${tutionOutOfPocket}`}</span>
         </div>
         <div className="checkbox-container">
           <input type="checkbox" id="paid-checkbox" name="paid-checkbox" />
           <label htmlFor="paid-checkbox" className="checkbox-label">Paid</label>
         </div>
-        </>
-      )}
+        </div>
+      ) : null}
+      
+      {categoryName === 'scholarship' ? (
+        <div className="scholarship-details">
+        <div className="scholarship-container">
+          <div className="item">Tuition w/ Fees:</div>
+          <input
+            type="text"
+            placeholder="Enter Tuition"
+            value={tuitionScholar}
+            onChange={e => setTuitionScholar(e.target.value)}
+          />
+          <div className="item">Lab/Class Fees:</div>
+          <input
+            type="text"
+            placeholder="Additional fees"
+            value={feesScholar}
+            onChange={e => setFeesScholar(e.target.value)}
+          />
+          <div className="item">Housing:</div>
+          <input
+            type="text"
+            placeholder="Enter Housing Costs"
+            value={housingScholar}
+            onChange={e => sethousingScholar(e.target.value)}
+          />
+        </div>
+        <div className="out-pocket-container">
+          <Button 
+            onClick={calculateScholarship}
+            variant="contained"
+            style={{
+              backgroundColor: '#FF684F',
+              color: 'white',
+              padding: '5px 15px',
+              fontSize: '1rem',
+              fontWeight: 'bold',
+              borderRadius: '15px',
+              marginTop: '30px',
+              cursor: 'pointer',
+              alignSelf: 'center',
+              '&:hover': { backgroundColor: '#F47C7C'},
+            }}>
+            Total Scholarship = 
+          </Button>
+          <span>{`$${totalScholar}`}</span>
+        </div>
+        <div className="checkbox-container">
+          <input type="checkbox" id="paid-checkbox" name="paid-checkbox" />
+          <label htmlFor="paid-checkbox" className="checkbox-label">Paid</label>
+        </div>
+        </div>
+      ) : null}
     </div>
     
   );
 }
 
 function Main() {
+
   const stats = {
     total: '$1,234,001.50',
     groceries: '$111.10',
@@ -258,9 +438,9 @@ function Main() {
       { date: '2024-02-24', item: 'bike', cost: '$55.55' },
     ],
     groceries: [
-      { date: 'Week 1', cost: '' },
-      { date: 'Week 2', cost: '' },
-      { date: 'Week 3', cost: '' },
+      { date: 'Week 1', cost: '$20.43' },
+      { date: 'Week 2', cost: '$64.34' },
+      { date: 'Week 3', cost: '$35.29' },
       { date: 'Week 4', cost: '' },
     ],
     hobby: [
@@ -271,15 +451,17 @@ function Main() {
     housing: [
     ],
     tuition: [
-      { date: 'Tuition w/ Fees', cost: '$3,670' },
-      { date: 'Lab/Class Fees', cost: '$75' },
     ],
     scholarship: [
-      { date: 'Tuition', cost: '' },
-      { date: 'Lab/Class Fees', cost: '' },
-      { date: 'Housing', cost: '' },
     ]
   });
+
+    // compute total expenses for each category for summary
+    const categoryTotals = Object.keys(categoriesData).reduce((totals, category) => {
+      const total = categoriesData[category].reduce((sum, item) => sum + parseFloat(item.cost.replace(/[$,]/g, '')), 0);
+      totals[category] = `$${total.toFixed(2)}`;
+      return totals;
+    }, {});
 
     //checks if expenses being logged 
     useEffect(() => {
@@ -287,18 +469,15 @@ function Main() {
     }, [categoriesData]);
   
     const addExpense = (categoryName, newExpense) => {
-      setCategoriesData(prevCategories => {
-        const updatedCategory = [newExpense, ...prevCategories[categoryName]]; // Prepend new expense
-        return {
-          ...prevCategories,
-          [categoryName]: updatedCategory
-        };
-      });
+      setCategoriesData(prevCategories => ({
+        ...prevCategories,
+        [categoryName]: [newExpense, ...prevCategories[categoryName]]
+      }));
     };
     
   
 
-  const renderStats = () => (
+  const renderStats = (categoryTotals) => (
     <div className="current-stats">
       <Heading text = "Current Monthly Stats"></Heading>
       <div className="stats-overview">
@@ -309,16 +488,15 @@ function Main() {
           <p className="total">{stats.total}</p>
         </div>
         <div className="categories-summary">
-          {Object.entries(stats).filter(([key]) => key !== 'total').map(([category, value], index) => (
+          {Object.entries(categoryTotals).map(([category, total], index) => (
             <div className="category-stat" key={index}>
-              <span className="category-name">{category.charAt(0).toUpperCase() + category.slice(1)} : </span>
+              <span className="category-name">{category.charAt(0).toUpperCase() + category.slice(1)}:</span>
+              <span className="category-value">{total}</span>
             </div>
           ))}
         </div>
       </div>
     </div>
-
-
   );
 
   return (
@@ -327,7 +505,7 @@ function Main() {
         <p>BudJet</p>
       </div>
       <div className="stats-container">
-        {renderStats()}
+        {renderStats(categoryTotals)}
       </div>
       <div className="categories-container">
         <div className="category-group">
