@@ -398,7 +398,7 @@ const renderHousing = () => {
               fontSize: '1rem',
               fontWeight: 'bold',
               borderRadius: '15px',
-              marginTop: '30px',
+              marginTop: '40px',
               cursor: 'pointer',
               alignSelf: 'center',
               '&:hover': { backgroundColor: '#F47C7C'},
@@ -406,10 +406,6 @@ const renderHousing = () => {
             Total Scholarship = 
           </Button>
           <span>{`$${totalScholar}`}</span>
-        </div>
-        <div className="checkbox-container">
-          <input type="checkbox" id="paid-checkbox" name="paid-checkbox" />
-          <label htmlFor="paid-checkbox" className="checkbox-label">Paid</label>
         </div>
         </div>
       ) : null}
