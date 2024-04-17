@@ -6,7 +6,7 @@ const prompt = require('prompt-sync')({ sigint: true });
 // Change this value to whatever you want the default to be. I didn't make an option for this
 // within the program because making vectors or other more specific data types from a string
 // is unnecessarily complicated for the use case of this.
-const DEFAULT_VALUE = [1, 2, 3];
+const DEFAULT_VALUE = [];
 
 const HELP_MESSAGE = "create <field name> <DEFAULT_VALUE (change within code)>\ndelete <field name>\n";
 
