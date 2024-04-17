@@ -80,6 +80,23 @@ app.post('/setquery', async (req, res) => {
 
 });
 
+// idk if this works yet but looks good to me :) -Cody
+// Endpoint for handling data modification requests
+app.post('/addcost', async (req, res) => {
+  // cookie is the user ID and field is the requested field (such as monthly income)
+  const { cookie, field, cost } = req.body;
+ /// {date: name: amt: }
+  // calls getdata function
+  const data = await addCostList(cookie, field, cost);
+
+  // Respond with the result (true if successful, otherwise code 500 sent)
+  if (data === false) {
+    res.sendStatus(500);
+  } else {
+    res.status(200).send(data);
+  }
+});
+
 
 // Status
 app.listen(PORT, () => {

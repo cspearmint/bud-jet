@@ -6,10 +6,9 @@ values for every field.
 
 const DEFAULT_USER = { 
     cookie: "",
-    data: [1, 2, 3],
-    test: [1, 2, 3]
+    disposable: []
 };
 
-const LOGIN_STRING = "mongodb+srv://<username>:<password>@budjetaccountdata.eoeu7gt.mongodb.net/?retryWrites=true&w=majority&appName=BudJetAccountData"
+const LOGIN_STRING = "mongodb+srv://codyflynn:cachecows@budjetaccountdata.eoeu7gt.mongodb.net/?retryWrites=true&w=majority&appName=BudJetAccountData"
 
 module.exports = { DEFAULT_USER, LOGIN_STRING };

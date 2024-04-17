@@ -10,7 +10,7 @@ V2 has added support for introducing, deleting, and modifying fields across user
 -Cody Flynn
 */
 
-const {DEFAULT_USER, LOGIN_STRING } = require('./constants');
+const { DEFAULT_USER, LOGIN_STRING } = require('./constants');
 
 // boilerplate to connect to database
 const { MongoClient, ServerApiVersion } = require('mongodb');
@@ -121,9 +121,10 @@ async function createUser(username, password) {
         await disconnectFromMongoDB();
         return 500;
     }
-
+    var user = DEFAULT_USER;
+    user.cookie = cookie;
     // if this code is reached, then user is created, so their entry in Data is created
-    await client.db("BudJet").collection("Data").insertOne(DEFAULT_USER);
+    await client.db("BudJet").collection("Data").insertOne(user);
     // disconnects before returning
     await disconnectFromMongoDB();
     return 200;
@@ -314,4 +315,53 @@ async function deleteField(field) {
     }
 }
 
-module.exports = { createUser, getLoginCookie, getData, setData, createField, deleteField };
+/*
+user information is stored in cost arrays that are saved per user on database.
+The following costs exist:
+groceries/food
+student costs
+rent and utilities
+other
+
+which are 4 vectors of floats saved per user.
+
+this allows you to pick a category and add a cost to it.
+
+*/
+
+/* 
+id is a string identifier, if none provided then default
+amount is a float storing the cost of the transaction
+date is date stored however you want to format it.. 
+
+
+
+*/
+
+async function addCostList(cookie, field, new_cost) {
+    // get cost list with query
+    var cost_list = getData(cookie, field);
+
+    // append cost list with provided cost
+    cost_list.push(new_cost);
+
+    // set user's cost list to appended list
+    setData(cookie, field, cost_list);
+
+    return;
+}
+
+/*
+async function removeCostList(cookie, list, cost_id) {
+        // get cost list with query
+        var cost_list = getData(cookie, list);
+        // check if cost with existing id exists, and remove it from list
+
+    
+        // set user's cost list to updated list
+        setData(cookie, list, cost_list);
+
+}
+*/
+
+module.exports = { createUser, getLoginCookie, getData, setData, createField, deleteField, addCostList };
