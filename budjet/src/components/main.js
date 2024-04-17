@@ -54,12 +54,26 @@ function ExpenseCard({ isOpen, onClose, onSave }) {
 function Category({ categoryName, items, onAddExpense }) {
   const [budget, setBudget] = useState(250); // holds budget
 
+  //GROCERIES EXPENSES
+  const [week1, setWeek1] = useState('');
+  const [week2, setWeek2] = useState('');
+  const [week3, setWeek3] = useState('');
+  const [week4, setWeek4] = useState('');
+  const [totalGroceries, setTotalGroceries] = useState('');
+
+  //calculates groceries as user types
+  useEffect(() => {
+    const total = parseFloat(week1 || 0) + parseFloat(week2 || 0) + parseFloat(week3 || 0) + parseFloat(week4 || 0);
+    setTotalGroceries(total.toFixed(2)); 
+  }, [week1, week2, week3, week4]);
+
   //calculate budget - totalExpenses
   const totalExpenses = items.reduce((total, item) => {
     return total + parseFloat(item.cost.replace(/[$,]/g, '') || 0);
   }, 0);
   const roundedExpenseTotal = `$${totalExpenses.toFixed(2)}`;
   const roundedBudget = `$${(budget - totalExpenses).toFixed(2)}`;
+  const roundedGroceriesBudget = `$${(budget - totalGroceries).toFixed(2)}`;
 
   const [dormChecked, setDormChecked] = useState(true); //sets dormChecked to true and declares setDormChecked as function to update its value
   
@@ -80,6 +94,12 @@ function Category({ categoryName, items, onAddExpense }) {
   const [feesScholar, setFeesScholar] = useState('');
   const [housingScholar, sethousingScholar] = useState('');
   const [totalScholar, setTotalScholar] = useState('');
+
+// //groceries total 
+// const calculateGroceries = () => {
+//   const total = parseFloat(week1 || 0) + parseFloat(week2 || 0) + parseFloat(week3 || 0) + parseFloat(week4 || 0);
+//   setTotalScholar(total.toFixed(2));
+// }
 
 //calculates housing out of pocket 
 const calculateOutOfPocket = () => {
@@ -224,7 +244,7 @@ const renderHousing = () => {
   return (
     <div className={`${categoryName} category-container`}>
         <Heading text = {categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}></Heading>
-        {(categoryName === 'disposable' || categoryName === 'hobby' || categoryName === 'groceries') && (
+        {(categoryName === 'disposable' || categoryName === 'hobby') && (
       <div className={`category-total ${categoryName}-total totalExpense`}>
       <div>${budget} - {roundedExpenseTotal} =</div>
       <div className='remainingBudget'>{roundedBudget}</div>
@@ -284,27 +304,44 @@ const renderHousing = () => {
           />
       </div>
       )}
-      {categoryName === 'groceries' && (
-        <div className="out-pocket-container">
-        <Button 
-          onClick={calculateTuition}
-          variant="contained"
-          style={{
-            backgroundColor: '#FF684F',
-            color: 'white',
-            padding: '5px 15px',
-            fontSize: '1rem',
-            fontWeight: 'bold',
-            borderRadius: '15px',
-            marginTop: '30px',
-            cursor: 'pointer',
-            alignSelf: 'center',
-            '&:hover': { backgroundColor: '#F47C7C'},
-          }}>
-          Calculate!
-        </Button>
-      </div>
-      )}
+      {categoryName === 'groceries' ? (
+        <div className="groceries-details">
+        <div className={`category-total ${categoryName}-total totalExpense`}>
+        <div>${budget} - {totalGroceries} =</div>
+        <div className='remainingBudget'>{roundedGroceriesBudget}</div>
+        </div>
+        <div className="groceries-container">
+          <div className="item">Week 1: </div>
+          <input
+            type="text"
+            placeholder=" $ -- "
+            value={week1}
+            onChange={e => setWeek1(e.target.value)}
+          />
+          <div className="item">Week 2:</div>
+          <input
+            type="text"
+            placeholder=" $ -- "
+            value={week2}
+            onChange={e => setWeek2(e.target.value)}
+          />
+          <div className="item">Week 3:</div>
+          <input
+            type="text"
+            placeholder=" $ -- "
+            value={week3}
+            onChange={e => setWeek3(e.target.value)}
+          />
+          <div className="item">Week 4:</div>
+          <input
+            type="text"
+            placeholder=" $ -- "
+            value={week4}
+            onChange={e => setWeek4(e.target.value)}
+          />
+        </div>
+        </div>
+      ) : null}
 
       {categoryName === 'housing' && (
         renderHousing()
@@ -433,11 +470,7 @@ function Main() {
       { date: '2024-07-24', item: 'clothes', cost: '$20.52' },
       { date: '2024-02-24', item: 'bike', cost: '$55.55' },
     ],
-    groceries: [
-      { date: 'Week 1', cost: '$20.43' },
-      { date: 'Week 2', cost: '$64.34' },
-      { date: 'Week 3', cost: '$35.29' },
-      { date: 'Week 4', cost: '' },
+    groceries: [,
     ],
     hobby: [
       { date: '2024-08-24', item: 'paint', cost: '$10.76' },
