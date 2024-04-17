@@ -141,8 +141,8 @@ TODO:
 
 .category-item {
   display: flex;
-  align-items: flex-start; /* Align items to the left */
-  gap: 10px; /* Adjust as needed */
+  align-items: flex-start;
+  gap: 10px; 
   padding-top: 1.5rem;
 }
 
@@ -162,6 +162,27 @@ TODO:
   padding-bottom: 3rem;
 }
 
+/*adding budget formula*/
+.category-total, .category-budget {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: white; 
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.remainingBudget {
+  position: absolute;
+  top: 25px;
+  right:-2px;
+  color: white; 
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #FF684F; 
+}
+
+
 /* adding expensens categories */
 
 /* disposable Category */
@@ -171,6 +192,8 @@ TODO:
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
+  max-height: 300px;
+  overflow-y: auto; 
 }
 
 
@@ -187,20 +210,21 @@ TODO:
 }
 
 
-/* groceries, tuition, scholarship catgeory */
-.groceries-date, .tuition-date, .scholarship-date {
+/* groceries, scholarship catgeory */
+.groceries-date, .scholarship-date {
   font-weight: bold;
   font-size: 1.4rem;
   margin-right: 10px; 
 }
 
-.groceries-value, .tuition-value, .scholarship-value {
+.groceries-value, .scholarship-value {
   font-size: 1.2rem;
   font-weight: bold;
   color: #FFE178;
   background-color: transparent;
   border: 2px solid black;
   border-radius: 5px;
+  margin-right: 50px;
   padding: 8px;
   width: auto; 
 }
@@ -312,20 +336,75 @@ TODO:
 }
 
 .card {
-  background-color: #424B54;
+  background-color: #1F272A;
   padding: 20px;
   border-radius: 8px;
-  z-index: 1001; 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-  max-width: 500px; 
+  max-width: 500px;
   width: 90%; 
-}
-
-.card label {
   display: flex;
   flex-direction: column;
 }
 
+.card {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: white;
+  padding-right: 20px;
+  margin: 0; 
+}
+.card h2 {
+  position: relative; 
+  display: inline-block; 
+  padding-bottom: 5px; 
+  margin-bottom: 20px;
+}
+
+.card h2::after {
+  content: ""; 
+  position: absolute; 
+  left: 0; 
+  bottom: 0; 
+  height: 1px; 
+  width: 100%; 
+  background-color: #FF684F; 
+}
+
+.card label {
+  display: flex; 
+  flex-direction: row; 
+  align-items: center; 
+  margin-bottom: 20px; 
+  justify-content: space-between;
+}
+
+.card input[type="text"], 
+.card input[type="date"] {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #FFE178;
+  background-color: transparent; 
+  border: 2px solid black; 
+  border-radius: 5px; 
+  padding: 8px;
+  width: 50%;
+}
+
+
+.card button {
+  background-color: #FF684F; 
+  color: white;
+  padding: 6px 15px;
+  font-size: 1.0rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 15px;
+  margin-top: 10px;
+  cursor: pointer;
+  align-self: center; 
+}
+
+/*housing category*/
 .dormcard-container {
   display: flex;
   justify-content: flex-start;
@@ -345,22 +424,124 @@ TODO:
 
 .out-pocket-container span {
   color: #FFE178;
+  margin-top: 40px;
+  margin-left: 10px;
 }
 
 .apartmentcard-container{
   padding-top: 2rem;
   display: grid;
-  grid-template-columns: 0.5fr 1fr; /* 2 equal columns */
-  grid-template-rows: 1fr 1fr 1fr; /* 3 equal rows */
-  gap: 0px; /* Optional gap between items */
+  grid-template-columns: 0.5fr 1fr; 
+  grid-template-rows: 1fr 1fr 1fr; 
+  gap: 0px; 
   align-items: center;
   justify-items: start;
   font-weight: bold;
   font-size: 24px;;
 }
 
+/*tuition catgegory*/
+.tuition-container{
+  padding-top: 1.5rem;
+  display: grid;
+  grid-template-columns: 0.5fr 1fr; 
+  grid-template-rows: 1fr 1fr 1fr; 
+  gap: 0px; 
+  align-items: center;
+  justify-items: start;
+  font-weight: bold;
+  font-size: 24px;;
+}
+
+.tuition-details input[type="text"] {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #FFE178;
+  background-color: transparent; 
+  border: 2px solid black; 
+  border-radius: 5px; 
+  padding: 8px;
+  width: 200px;
+  margin: 5px 0; 
+  margin-right: 100px;
+}
+
+.tuition-details input[type="text"]:disabled {
+  color: #666;
+  border-color: #ccc; 
+}
+
+.out-tuition-container span {
+  color: #FFE178;
+  margin-top: 40px;
+  margin-left: 10px;
+}
+
+
+/*scholarship catgegory*/
+.scholarship-container{
+  padding-top: 1.5rem;
+  display: grid;
+  grid-template-columns: 0.5fr 1fr; 
+  grid-template-rows: 1fr 1fr 1fr; 
+  gap: 0px; 
+  align-items: center;
+  justify-items: start;
+  font-weight: bold;
+  font-size: 24px;;
+}
+
+.scholarship-details input[type="text"] {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #FFE178;
+  background-color: transparent; 
+  border: 2px solid black; 
+  border-radius: 5px; 
+  padding: 8px;
+  width: 200px;
+  margin: 5px 0; 
+  margin-right: 100px;
+}
+
+.scholarship-details input[type="text"]:disabled {
+  color: #666;
+  border-color: #ccc; 
+}
+
+.out-scholarship-container span {
+  color: #FFE178;
+  margin-top: 40px;
+  margin-left: 10px;
+}
+
+/*groceries catgegory*/
+.groceries-container{
+  padding-top: 1.5rem;
+  display: grid;
+  grid-template-columns: 0.5fr 1fr; 
+  grid-template-rows: 1fr 1fr 1fr; 
+  gap: 0px; 
+  align-items: center;
+  justify-items: start;
+  font-weight: bold;
+  font-size: 24px;;
+}
+
+.groceries-details input[type="text"] {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #FFE178;
+  background-color: transparent; 
+  border: 2px solid black; 
+  border-radius: 5px; 
+  padding: 8px;
+  width: 230px;
+  margin: 5px 0; 
+  margin-right: 100px;
+}
 .item {
-  /* Additional styling for each item */
+
   padding-bottom: 1rem;
 }
 
@@ -389,3 +570,5 @@ TODO:
   display: flex;
   justify-content: center;
 }
+
+
