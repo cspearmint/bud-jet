@@ -32,13 +32,13 @@ const Logincard = () => {
                     password: password
                 });
                 console.log('Login successful:', response.data);
-		const cookieValue = response.data;
+		        const cookieValue = response.data;
                 document.cookie = `budjetCookie=${cookieValue}; path=/`;
-		let storedCookie = document.cookie.split(';').find(cookie => cookie.trim().startsWith('budjetCookie'));
-		storedCookie = storedCookie ? storedCookie.split('=')[1] : null;
-		console.log('Cookie as retrieved: ', storedCookie);
+		        let storedCookie = document.cookie.split(';').find(cookie => cookie.trim().startsWith('budjetCookie'));
+		        storedCookie = storedCookie ? storedCookie.split('=')[1] : null;
+		        console.log('Cookie as retrieved: ', storedCookie);
             	// Redirect after successful login
-		window.location.href = '/Main';
+		        window.location.href = '/Main';
             } catch (error) {
                 console.error('Login failed:', error);
                 // Handle login failure

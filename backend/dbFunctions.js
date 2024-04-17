@@ -247,6 +247,42 @@ async function setData(cookie, field, new_value) {
     }
 }
 
+async function pushData(cookie, field, new_value) {
+    // tries to find an entry in Data collection under the given cookie
+    try {
+        if (field == "cookie")
+            throw new Error("you can't overwrite user cookies (that would destroy the database)");
+        // connects to database
+        await connectToMongoDB();
+        // searches the database
+        const result = await client.db("BudJet").collection("Data").findOne({ cookie: cookie });
+        // if found, try to access the data from the given field
+        if (result) {
+            const currentData = result[field]
+            if (Array.isArray(currentData)) {
+                if (result[field]) { 
+                    currentData.push(new_value)
+                    const update = { $set: { [field]: currentData } };
+                    await client.db("BudJet").collection("Data").updateOne({ cookie: cookie }, update);
+                    await disconnectFromMongoDB();
+                    return true;
+                }
+            } else {
+                throw new Error("Not an array!");
+            }
+        } 
+        // otherwise, the cookie is invalid and it throws an error 
+        else
+            throw new Error("Failed to find user");
+    } 
+    catch (err) {
+        console.error("Error occurred while setting data", err);
+        // disconnects before returning
+        await disconnectFromMongoDB();
+        return false;
+    }
+}
+
 
 // field create/delete (for dev use only)
 // if someone is making a new module and wants all users to have a new field and a default value for that field
@@ -314,4 +350,4 @@ async function deleteField(field) {
     }
 }
 
-module.exports = { createUser, getLoginCookie, getData, setData, createField, deleteField };
+module.exports = { createUser, getLoginCookie, getData, setData, pushData, createField, deleteField };

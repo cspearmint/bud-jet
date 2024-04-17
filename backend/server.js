@@ -2,7 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const { createUser, getLoginCookie, getData, setData } = require('./dbFunctions'); // importing database functions
+const { createUser, getLoginCookie, getData, setData, pushData } = require('./dbFunctions'); // importing database functions
 
 const app = express();
 const PORT = 3001;
@@ -32,10 +32,8 @@ app.post('/createuser', async (req, res) => {
 // Endpoint for handling login requests
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
-
   // calls login function
   const loginResult = await getLoginCookie(username, password);
-
   //if null, the password or username was incorrect and th
   if (loginResult === null) {
     res.sendStatus(401);
@@ -80,6 +78,15 @@ app.post('/setquery', async (req, res) => {
 
 });
 
+app.post('/pushquery', async (req, res) => {
+  const { cookie, field, val } = req.body;
+  const data = await pushData(cookie, field, val);
+  if (data === false) {
+    res.sendStatus(500);
+  } else {
+    res.status(200).send(data);
+  }
+});
 
 // Status
 app.listen(PORT, () => {

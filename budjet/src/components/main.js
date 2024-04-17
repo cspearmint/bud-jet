@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from "axios";
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
@@ -108,8 +109,15 @@ function Category({ categoryName, items }) {
   };
 
   // saves the new expense?
-  const handleSaveExpense = (name, date, amount) => {
+  const handleSaveExpense = async (name, date, amount) => {
     console.log("Saving Expense:", name, date, amount);
+    let storedCookie = document.cookie.split(';').find(cookie => cookie.trim().startsWith('budjetCookie'));
+		storedCookie = storedCookie ? storedCookie.split('=')[1] : null;
+    const response = await axios.post('http://localhost:3001/pushquery', {
+                    cookie: storedCookie,
+                    field: "costs",
+                    val: { name: name, date: date, amount: parseFloat(amount) }
+                  });
     handleCloseCard();
   };
 
