@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { Link } from 'react-router-dom';
 import "./Logincard.css";
 import "./Loginbutton.css";
@@ -21,16 +22,35 @@ const Logincard = () => {
         }
     
         // user submits
-        const handleSubmit = (event) => {
+        const handleSubmit = async (event) => {
             event.preventDefault(); 
             console.log("Email: ", email);
             console.log("Password: ", password);
+            try {
+                const response = await axios.post('http://localhost:3001/login', {
+                    username: email,
+                    password: password
+                });
+                console.log('Login successful:', response.data);
+		const cookieValue = response.data;
+                document.cookie = `budjetCookie=${cookieValue}; path=/`;
+		let storedCookie = document.cookie.split(';').find(cookie => cookie.trim().startsWith('budjetCookie'));
+		storedCookie = storedCookie ? storedCookie.split('=')[1] : null;
+		console.log('Cookie as retrieved: ', storedCookie);
+            	// Redirect after successful login
+		window.location.href = '/Main';
+            } catch (error) {
+                console.error('Login failed:', error);
+                // Handle login failure
+            }
         }
 
     return (
         <div className="login_card">
             <div className="login_card-container">
-                <Heading text="Login" />
+                <div className = "login_card-container-heading">
+                    <Heading text="Login" />
+                </div>
                 <form onSubmit={handleSubmit}>
                 <div className="login_card-container-text">
                     <p className="login_card-container-text-p1">Don't have an account yet? <Link to="/Signup" className="highlighted-text">Sign up!</Link></p>
@@ -75,3 +95,4 @@ const Logincard = () => {
 };
 
 export default Logincard;
+

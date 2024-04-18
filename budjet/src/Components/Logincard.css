@@ -1,59 +1,63 @@
 
 .login_card {
-    background-color: #424B54;
-    width: 95%;
-    height: 82%;
-    margin-left: 50px;
-    display: flex;
-    /*border: 5px solid #424B54; */
-    /*border-radius: 30px*/
-  }
-  
+  background-color: #424B54;
+  width: 95%;
+  height: 82%;
+  margin-left: 50px;
+  display: flex;
+  /*border: 5px solid #424B54; */
+  border-radius: 20px
+}
 
-  .login_card-container{
-    padding: 3rem;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
 
-  .login_card-container-text{
-    font-size: 24;
-    font-weight: bold;
-    color: white;
-    flex: 1;
+.login_card-container{
+  padding: 3rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
 
-    display: flex;
-    flex-direction: column;
-  
-  }
+.login_card-container-heading{
+display: flex;
+justify-content: center;
+}
+.login_card-container-text{
+  font-size: 24;
+  font-weight: bold;
+  color: white;
+  flex: 1;
 
-  .login_card-container-text-p1 {
-    padding-bottom: 1.5rem;
-    padding-top: 1rem;
-    margin: 0;
-  }
+  display: flex;
+  flex-direction: column;
 
-  .highlighted-text {
-    padding-top: 1.5rem;
-    color: #FFE178;
-    display: inline-block; /* Place paragraphs on the same line */
-  }
+}
 
-  .login_card-container-text-textboxes{
-    padding-top: 0.5rem;
-    display: flex;
-    flex-direction: column;
-  }
+.login_card-container-text-p1 {
+  padding-bottom: 1.5rem;
+  padding-top: 1rem;
+  margin: 0;
+}
 
- .login_card-container-text-link{
-    display: inline-block
- }
+.highlighted-text {
+  padding-top: 1.5rem;
+  color: #FFE178;
+  display: inline-block; /* Place paragraphs on the same line */
+}
 
- .login_card-container-text-textboxes-p3 {
-  width: 150px; /* Adjust the width as needed */
-  text-align: left; /* Align the text to the left */
-  margin-right: 20px; /* Add some margin to separate it from the text box */
+.login_card-container-text-textboxes{
+  padding-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.login_card-container-text-link{
+  display: inline-block
+}
+
+.login_card-container-text-textboxes-p3 {
+width: 150px; /* Adjust the width as needed */
+text-align: left; /* Align the text to the left */
+margin-right: 20px; /* Add some margin to separate it from the text box */
 }
 
 
