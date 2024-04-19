@@ -201,7 +201,7 @@ const renderHousing = () => {
             alignSelf: 'center',
             '&:hover': { backgroundColor: '#F47C7C'},
           }}>
-          Calculate Out of Pocket =
+          Total Housing =
         </Button>
         <span>{`$${outOfPocket}`}</span>
       </div>
@@ -388,7 +388,7 @@ const renderHousing = () => {
               alignSelf: 'center',
               '&:hover': { backgroundColor: '#F47C7C'},
             }}>
-            Calculate Out of Pocket =
+            Total Tuition =
           </Button>
           <span>{`$${tutionOutOfPocket}`}</span>
         </div>
