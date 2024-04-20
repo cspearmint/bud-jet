@@ -420,7 +420,8 @@ TODO:
   align-items: center;
   justify-items: start;
   font-weight: bold;
-  font-size: 24px;;
+  font-size: 24px;
+  margin-top: -80px;
 }
 
 .out-pocket-container{
@@ -447,7 +448,8 @@ TODO:
   align-items: center;
   justify-items: start;
   font-weight: bold;
-  font-size: 24px;;
+  font-size: 24px;
+  margin-top: -80px;
 }
 
 /*tuition catgegory*/
@@ -460,7 +462,8 @@ TODO:
   align-items: center;
   justify-items: start;
   font-weight: bold;
-  font-size: 24px;;
+  font-size: 24px;
+  margin-top: -55px;
 }
 
 .tuition-details input[type="text"] {
@@ -498,7 +501,8 @@ TODO:
   align-items: center;
   justify-items: start;
   font-weight: bold;
-  font-size: 24px;;
+  font-size: 24px;
+  margin-top: -80px;
 }
 
 .scholarship-details input[type="text"] {

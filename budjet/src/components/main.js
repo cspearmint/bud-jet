@@ -51,7 +51,7 @@ function ExpenseCard({ isOpen, onClose, onSave }) {
   }  
 
 //specific category component
-function Category({ categoryName, items, onAddExpense, onUpdateGroceries, onUpdateHousing}) {
+function Category({ categoryName, items, onAddExpense, onUpdateGroceries, onUpdateHousing, onUpdateTuition, onUpdateScholar}) {
   const [budget, setBudget] = useState(250); // holds budget
 
   //GROCERIES EXPENSES
@@ -97,6 +97,20 @@ function Category({ categoryName, items, onAddExpense, onUpdateGroceries, onUpda
   const [outOfPocket, setOutOfPocket] = useState('');
   const handleSwitchChange = () => setDormChecked(!dormChecked);
 
+  //adds updated housing data
+  useEffect(() => {
+    if (categoryName === 'housing') {
+        const newData = [
+            { name: 'Semester Cost', cost: dormCost },
+            { name: 'Rent', cost: rent },
+            { name: 'Utilities', cost: utilities }
+        ];
+        onUpdateHousing(newData);
+    }
+}, [dormCost, rent, utilities, onUpdateHousing, categoryName]);
+
+
+
   //TUTION EXPENSES
   const [tuition, setTuition] = useState('');
   const [fees, setFees] = useState('');
@@ -107,6 +121,28 @@ function Category({ categoryName, items, onAddExpense, onUpdateGroceries, onUpda
   const [feesScholar, setFeesScholar] = useState('');
   const [housingScholar, sethousingScholar] = useState('');
   const [totalScholar, setTotalScholar] = useState('');
+
+   //adds updated tuition & scholarhip data
+   useEffect(() => {
+    if (categoryName === 'tuition') {
+        const newData = [
+            { name: 'Tuition', cost: tuition },
+            { name: 'Fees', cost: fees }
+        ];
+        onUpdateTuition(newData);
+    }
+}, [tuition, fees, onUpdateTuition, categoryName]);
+
+useEffect(() => {
+  if (categoryName === 'scholarship') {
+      const newData = [
+          { name: 'Tuition', cost: tuitionScholar },
+          { name: 'Fees', cost: feesScholar },
+          { name: 'Hosuing', cost: housingScholar }
+      ];
+      onUpdateScholar(newData);
+  }
+}, [tuitionScholar, feesScholar, housingScholar, onUpdateScholar, categoryName]);
 
 // //groceries total 
 // const calculateGroceries = () => {
@@ -139,11 +175,6 @@ const calculateScholarship = () => {
   console.log("Calculating total scholarship:", total); // Log to see if the function is called
   setTotalScholar(total.toFixed(2));
 }
-
-
-
-
-
 
 const renderHousing = () => {
   return (
@@ -274,7 +305,7 @@ const renderHousing = () => {
       
       {items.map((item, index) => (
           <div className='category-item' key={index}>
-              {categoryName !== 'groceries' ? (
+              {categoryName !== 'groceries' && categoryName !== 'housing' && categoryName !== 'tuition' && categoryName !== 'scholarship'  ? (
                   <>
                       <span className={`${categoryName}-date`}>{item.date}</span> ~
                       <span className={`${categoryName}-name`}>{item.item}</span>:
@@ -512,6 +543,19 @@ function Main() {
       }));
   };
 
+    const updateTuition = (newData) => {
+      setCategoriesData(prev => ({
+          ...prev,
+          tuition: newData
+      }));
+  };
+  const updateScholar = (newData) => {
+    setCategoriesData(prev => ({
+        ...prev,
+        scholarship: newData
+    }));
+  };
+
     
 
 
@@ -576,8 +620,8 @@ function Main() {
           <Category categoryName="housing" items={categoriesData.housing} onUpdateHousing={updateHousing}/>
         </div>
         <div className="category-group">
-          <Category categoryName="tuition" items={categoriesData.tuition}/>
-          <Category categoryName="scholarship" items={categoriesData.scholarship}/>
+          <Category categoryName="tuition" items={categoriesData.tuition} onUpdateTuition={updateTuition}/>
+          <Category categoryName="scholarship" items={categoriesData.scholarship} onUpdateScholar={updateScholar}/>
         </div>
       </div>
     </div>
