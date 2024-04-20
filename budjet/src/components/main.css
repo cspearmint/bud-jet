@@ -198,6 +198,12 @@ TODO:
 
 
 /* disposables & hobby categories*/
+.disposable-date, .hobby-date {
+  font-weight: bold;
+  font-size: 1.4rem;
+  margin-right: 10px; 
+}
+
 .disposable .disposable-value, .hobby .hobby-value {
   color: #FFE178;
   font-size: 1.2rem;
@@ -406,11 +412,16 @@ TODO:
 
 /*housing category*/
 .dormcard-container {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
   padding-top: 2rem;
-  padding-bottom: 2rem;
+  display: grid;
+  grid-template-columns: 0.5fr 1fr; 
+  grid-template-rows: 1fr 1fr 1fr; 
+  gap: 0px; 
+  align-items: center;
+  justify-items: start;
+  font-weight: bold;
+  font-size: 24px;
+  margin-top: -80px;
 }
 
 .out-pocket-container{
@@ -437,7 +448,8 @@ TODO:
   align-items: center;
   justify-items: start;
   font-weight: bold;
-  font-size: 24px;;
+  font-size: 24px;
+  margin-top: -80px;
 }
 
 /*tuition catgegory*/
@@ -450,7 +462,8 @@ TODO:
   align-items: center;
   justify-items: start;
   font-weight: bold;
-  font-size: 24px;;
+  font-size: 24px;
+  margin-top: -55px;
 }
 
 .tuition-details input[type="text"] {
@@ -488,7 +501,8 @@ TODO:
   align-items: center;
   justify-items: start;
   font-weight: bold;
-  font-size: 24px;;
+  font-size: 24px;
+  margin-top: -80px;
 }
 
 .scholarship-details input[type="text"] {
@@ -517,7 +531,6 @@ TODO:
 
 /*groceries catgegory*/
 .groceries-container{
-  padding-top: 1.5rem;
   display: grid;
   grid-template-columns: 0.5fr 1fr; 
   grid-template-rows: 1fr 1fr 1fr; 
@@ -525,7 +538,8 @@ TODO:
   align-items: center;
   justify-items: start;
   font-weight: bold;
-  font-size: 24px;;
+  font-size: 24px;
+  margin-top: -80px;
 }
 
 .groceries-details input[type="text"] {
@@ -570,5 +584,4 @@ TODO:
   display: flex;
   justify-content: center;
 }
-
 

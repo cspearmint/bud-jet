@@ -51,7 +51,7 @@ function ExpenseCard({ isOpen, onClose, onSave }) {
   }  
 
 //specific category component
-function Category({ categoryName, items, onAddExpense }) {
+function Category({ categoryName, items, onAddExpense, onUpdateGroceries, onUpdateHousing, onUpdateTuition, onUpdateScholar}) {
   const [budget, setBudget] = useState(250); // holds budget
 
   //GROCERIES EXPENSES
@@ -66,6 +66,19 @@ function Category({ categoryName, items, onAddExpense }) {
     const total = parseFloat(week1 || 0) + parseFloat(week2 || 0) + parseFloat(week3 || 0) + parseFloat(week4 || 0);
     setTotalGroceries(total.toFixed(2)); 
   }, [week1, week2, week3, week4]);
+
+      useEffect(() => {
+        if (categoryName === 'groceries') {
+            const newData = [
+                { week: 'Week 1', cost: week1 },
+                { week: 'Week 2', cost: week2 },
+                { week: 'Week 3', cost: week3 },
+                { week: 'Week 4', cost: week4 }
+            ];
+            onUpdateGroceries(newData);
+        }
+    }, [week1, week2, week3, week4, onUpdateGroceries, categoryName]);
+    
 
   //calculate budget - totalExpenses
   const totalExpenses = items.reduce((total, item) => {
@@ -84,6 +97,20 @@ function Category({ categoryName, items, onAddExpense }) {
   const [outOfPocket, setOutOfPocket] = useState('');
   const handleSwitchChange = () => setDormChecked(!dormChecked);
 
+  //adds updated housing data
+  useEffect(() => {
+    if (categoryName === 'housing') {
+        const newData = [
+            { name: 'Semester Cost', cost: dormCost },
+            { name: 'Rent', cost: rent },
+            { name: 'Utilities', cost: utilities }
+        ];
+        onUpdateHousing(newData);
+    }
+}, [dormCost, rent, utilities, onUpdateHousing, categoryName]);
+
+
+
   //TUTION EXPENSES
   const [tuition, setTuition] = useState('');
   const [fees, setFees] = useState('');
@@ -94,6 +121,28 @@ function Category({ categoryName, items, onAddExpense }) {
   const [feesScholar, setFeesScholar] = useState('');
   const [housingScholar, sethousingScholar] = useState('');
   const [totalScholar, setTotalScholar] = useState('');
+
+   //adds updated tuition & scholarhip data
+   useEffect(() => {
+    if (categoryName === 'tuition') {
+        const newData = [
+            { name: 'Tuition', cost: tuition },
+            { name: 'Fees', cost: fees }
+        ];
+        onUpdateTuition(newData);
+    }
+}, [tuition, fees, onUpdateTuition, categoryName]);
+
+useEffect(() => {
+  if (categoryName === 'scholarship') {
+      const newData = [
+          { name: 'Tuition', cost: tuitionScholar },
+          { name: 'Fees', cost: feesScholar },
+          { name: 'Hosuing', cost: housingScholar }
+      ];
+      onUpdateScholar(newData);
+  }
+}, [tuitionScholar, feesScholar, housingScholar, onUpdateScholar, categoryName]);
 
 // //groceries total 
 // const calculateGroceries = () => {
@@ -127,11 +176,6 @@ const calculateScholarship = () => {
   setTotalScholar(total.toFixed(2));
 }
 
-
-
-
-
-
 const renderHousing = () => {
   return (
     <div className="housing-content">
@@ -158,6 +202,13 @@ const renderHousing = () => {
             placeholder="Semester Cost"
             value={dormCost}
             onChange={e => setDormCost(e.target.value)}
+          />
+          <div className="item">Total:</div>
+          <input
+            type="text"
+            placeholder="Total"
+            value={parseFloat(dormCost || 0)}
+            disabled
           />
         </div>
       ) : (
@@ -201,7 +252,7 @@ const renderHousing = () => {
             alignSelf: 'center',
             '&:hover': { backgroundColor: '#F47C7C'},
           }}>
-          Calculate Out of Pocket =
+          Total Housing =
         </Button>
         <span>{`$${outOfPocket}`}</span>
       </div>
@@ -253,26 +304,18 @@ const renderHousing = () => {
 
       
       {items.map((item, index) => (
-        <div className='category-item' key={index}>
-          {categoryName === 'groceries' || categoryName === 'tuition' || categoryName === 'scholarship' ? (
-            <div className = "gts-container">
-              <span className={`${categoryName}-date`}>{item.date} :</span>
-              <input
-                type="text"
-                placeholder="$  --  "
-                value={data[index]}
-                onChange={(e) => handleInputChange(index, e.target.value)}
-                className={`category-value ${categoryName}-value`}
-              />
-            </div>
-          ) : (
-            <>
-              <span className={`${categoryName}-name`}>{item.date}</span> ~
-              <span className={`${categoryName}-name`}>{item.item}</span>:
-              <span className={`${categoryName}-value`}>{item.cost}</span>
-            </>
-          )}
-        </div>
+          <div className='category-item' key={index}>
+              {categoryName !== 'groceries' && categoryName !== 'housing' && categoryName !== 'tuition' && categoryName !== 'scholarship'  ? (
+                  <>
+                      <span className={`${categoryName}-date`}>{item.date}</span> ~
+                      <span className={`${categoryName}-name`}>{item.item}</span>:
+                      <span className={`${categoryName}-value`}>{item.cost}</span>
+                  </>
+              ) : (
+                  <div className="gts-container">
+                  </div>
+              )}
+          </div>
       ))}
 
       {(categoryName === 'disposable' || categoryName === 'hobby') &&(
@@ -388,7 +431,7 @@ const renderHousing = () => {
               alignSelf: 'center',
               '&:hover': { backgroundColor: '#F47C7C'},
             }}>
-            Calculate Out of Pocket =
+            Total Tuition =
           </Button>
           <span>{`$${tutionOutOfPocket}`}</span>
         </div>
@@ -485,6 +528,37 @@ function Main() {
     ]
   });
 
+  //passes from category componenet
+      const updateGroceries = (newData) => {
+        setCategoriesData(prev => ({
+            ...prev,
+            groceries: newData
+        }));
+    };
+
+    const updateHousing = (newData) => {
+      setCategoriesData(prev => ({
+          ...prev,
+          housing: newData
+      }));
+  };
+
+    const updateTuition = (newData) => {
+      setCategoriesData(prev => ({
+          ...prev,
+          tuition: newData
+      }));
+  };
+  const updateScholar = (newData) => {
+    setCategoriesData(prev => ({
+        ...prev,
+        scholarship: newData
+    }));
+  };
+
+    
+
+
     // compute total expenses for each category for summary
     const categoryTotals = Object.keys(categoriesData).reduce((totals, category) => {
       const total = categoriesData[category].reduce((sum, item) => sum + parseFloat(item.cost.replace(/[$,]/g, '')), 0);
@@ -539,15 +613,15 @@ function Main() {
       <div className="categories-container">
         <div className="category-group">
           <Category categoryName="disposable" items={categoriesData.disposable} onAddExpense={addExpense} />
-          <Category categoryName="groceries" items={categoriesData.groceries}/>
+          <Category categoryName="groceries" items={categoriesData.groceries} onUpdateGroceries={updateGroceries}/>
         </div>
         <div className="category-group">
           <Category categoryName="hobby" items={categoriesData.hobby} onAddExpense={addExpense} />
-          <Category categoryName="housing" items={categoriesData.housing}/>
+          <Category categoryName="housing" items={categoriesData.housing} onUpdateHousing={updateHousing}/>
         </div>
         <div className="category-group">
-          <Category categoryName="tuition" items={categoriesData.tuition}/>
-          <Category categoryName="scholarship" items={categoriesData.scholarship}/>
+          <Category categoryName="tuition" items={categoriesData.tuition} onUpdateTuition={updateTuition}/>
+          <Category categoryName="scholarship" items={categoriesData.scholarship} onUpdateScholar={updateScholar}/>
         </div>
       </div>
     </div>
