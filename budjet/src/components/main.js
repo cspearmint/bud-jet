@@ -51,7 +51,7 @@ function ExpenseCard({ isOpen, onClose, onSave }) {
   }  
 
 //specific category component
-function Category({ categoryName, items, onAddExpense, onUpdateGroceries }) {
+function Category({ categoryName, items, onAddExpense, onUpdateGroceries, onUpdateHousing}) {
   const [budget, setBudget] = useState(250); // holds budget
 
   //GROCERIES EXPENSES
@@ -78,6 +78,7 @@ function Category({ categoryName, items, onAddExpense, onUpdateGroceries }) {
             onUpdateGroceries(newData);
         }
     }, [week1, week2, week3, week4, onUpdateGroceries, categoryName]);
+    
 
   //calculate budget - totalExpenses
   const totalExpenses = items.reduce((total, item) => {
@@ -170,6 +171,13 @@ const renderHousing = () => {
             placeholder="Semester Cost"
             value={dormCost}
             onChange={e => setDormCost(e.target.value)}
+          />
+          <div className="item">Total:</div>
+          <input
+            type="text"
+            placeholder="Total"
+            value={parseFloat(dormCost || 0)}
+            disabled
           />
         </div>
       ) : (
@@ -497,6 +505,15 @@ function Main() {
         }));
     };
 
+    const updateHousing = (newData) => {
+      setCategoriesData(prev => ({
+          ...prev,
+          housing: newData
+      }));
+  };
+
+    
+
 
     // compute total expenses for each category for summary
     const categoryTotals = Object.keys(categoriesData).reduce((totals, category) => {
@@ -556,7 +573,7 @@ function Main() {
         </div>
         <div className="category-group">
           <Category categoryName="hobby" items={categoriesData.hobby} onAddExpense={addExpense} />
-          <Category categoryName="housing" items={categoriesData.housing}/>
+          <Category categoryName="housing" items={categoriesData.housing} onUpdateHousing={updateHousing}/>
         </div>
         <div className="category-group">
           <Category categoryName="tuition" items={categoriesData.tuition}/>

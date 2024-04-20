@@ -412,11 +412,15 @@ TODO:
 
 /*housing category*/
 .dormcard-container {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
   padding-top: 2rem;
-  padding-bottom: 2rem;
+  display: grid;
+  grid-template-columns: 0.5fr 1fr; 
+  grid-template-rows: 1fr 1fr 1fr; 
+  gap: 0px; 
+  align-items: center;
+  justify-items: start;
+  font-weight: bold;
+  font-size: 24px;;
 }
 
 .out-pocket-container{
