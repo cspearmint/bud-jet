@@ -51,7 +51,7 @@ function ExpenseCard({ isOpen, onClose, onSave }) {
   }  
 
 //specific category component
-function Category({ categoryName, items, onAddExpense }) {
+function Category({ categoryName, items, onAddExpense, onUpdateGroceries }) {
   const [budget, setBudget] = useState(250); // holds budget
 
   //GROCERIES EXPENSES
@@ -66,6 +66,18 @@ function Category({ categoryName, items, onAddExpense }) {
     const total = parseFloat(week1 || 0) + parseFloat(week2 || 0) + parseFloat(week3 || 0) + parseFloat(week4 || 0);
     setTotalGroceries(total.toFixed(2)); 
   }, [week1, week2, week3, week4]);
+
+      useEffect(() => {
+        if (categoryName === 'groceries') {
+            const newData = [
+                { week: 'Week 1', cost: week1 },
+                { week: 'Week 2', cost: week2 },
+                { week: 'Week 3', cost: week3 },
+                { week: 'Week 4', cost: week4 }
+            ];
+            onUpdateGroceries(newData);
+        }
+    }, [week1, week2, week3, week4, onUpdateGroceries, categoryName]);
 
   //calculate budget - totalExpenses
   const totalExpenses = items.reduce((total, item) => {
@@ -253,26 +265,18 @@ const renderHousing = () => {
 
       
       {items.map((item, index) => (
-        <div className='category-item' key={index}>
-          {categoryName === 'groceries' || categoryName === 'tuition' || categoryName === 'scholarship' ? (
-            <div className = "gts-container">
-              <span className={`${categoryName}-date`}>{item.date} :</span>
-              <input
-                type="text"
-                placeholder="$  --  "
-                value={data[index]}
-                onChange={(e) => handleInputChange(index, e.target.value)}
-                className={`category-value ${categoryName}-value`}
-              />
-            </div>
-          ) : (
-            <>
-              <span className={`${categoryName}-name`}>{item.date}</span> ~
-              <span className={`${categoryName}-name`}>{item.item}</span>:
-              <span className={`${categoryName}-value`}>{item.cost}</span>
-            </>
-          )}
-        </div>
+          <div className='category-item' key={index}>
+              {categoryName !== 'groceries' ? (
+                  <>
+                      <span className={`${categoryName}-date`}>{item.date}</span> ~
+                      <span className={`${categoryName}-name`}>{item.item}</span>:
+                      <span className={`${categoryName}-value`}>{item.cost}</span>
+                  </>
+              ) : (
+                  <div className="gts-container">
+                  </div>
+              )}
+          </div>
       ))}
 
       {(categoryName === 'disposable' || categoryName === 'hobby') &&(
@@ -485,6 +489,15 @@ function Main() {
     ]
   });
 
+  //passes from category componenet
+      const updateGroceries = (newData) => {
+        setCategoriesData(prev => ({
+            ...prev,
+            groceries: newData
+        }));
+    };
+
+
     // compute total expenses for each category for summary
     const categoryTotals = Object.keys(categoriesData).reduce((totals, category) => {
       const total = categoriesData[category].reduce((sum, item) => sum + parseFloat(item.cost.replace(/[$,]/g, '')), 0);
@@ -539,7 +552,7 @@ function Main() {
       <div className="categories-container">
         <div className="category-group">
           <Category categoryName="disposable" items={categoriesData.disposable} onAddExpense={addExpense} />
-          <Category categoryName="groceries" items={categoriesData.groceries}/>
+          <Category categoryName="groceries" items={categoriesData.groceries} onUpdateGroceries={updateGroceries}/>
         </div>
         <div className="category-group">
           <Category categoryName="hobby" items={categoriesData.hobby} onAddExpense={addExpense} />
