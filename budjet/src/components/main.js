@@ -109,8 +109,6 @@ function Category({ categoryName, items, onAddExpense, onUpdateGroceries, onUpda
     }
 }, [dormCost, rent, utilities, onUpdateHousing, categoryName]);
 
-
-
   //TUTION EXPENSES
   const [tuition, setTuition] = useState('');
   const [fees, setFees] = useState('');
@@ -123,7 +121,7 @@ function Category({ categoryName, items, onAddExpense, onUpdateGroceries, onUpda
   const [totalScholar, setTotalScholar] = useState('');
 
    //adds updated tuition & scholarhip data
-   useEffect(() => {
+  useEffect(() => {
     if (categoryName === 'tuition') {
         const newData = [
             { name: 'Tuition', cost: tuition },
@@ -133,16 +131,16 @@ function Category({ categoryName, items, onAddExpense, onUpdateGroceries, onUpda
     }
 }, [tuition, fees, onUpdateTuition, categoryName]);
 
-useEffect(() => {
-  if (categoryName === 'scholarship') {
-      const newData = [
-          { name: 'Tuition', cost: tuitionScholar },
-          { name: 'Fees', cost: feesScholar },
-          { name: 'Hosuing', cost: housingScholar }
-      ];
-      onUpdateScholar(newData);
-  }
-}, [tuitionScholar, feesScholar, housingScholar, onUpdateScholar, categoryName]);
+  useEffect(() => {
+    if (categoryName === 'scholarship') {
+        const newData = [
+            { name: 'Tuition', cost: tuitionScholar },
+            { name: 'Fees', cost: feesScholar },
+            { name: 'Housing', cost: housingScholar }
+        ];
+        onUpdateScholar(newData);
+    }
+  }, [tuitionScholar, feesScholar, housingScholar, onUpdateScholar, categoryName]);
 
 // //groceries total 
 // const calculateGroceries = () => {
@@ -514,6 +512,10 @@ function Main() {
       { date: '2024-02-24', item: 'bike', cost: '$55.55' },
     ],
     groceries: [,
+      { week: 'Week 1', cost: '' },
+      { week: 'Week 2', cost: '' },
+      { week: 'Week 3', cost: '' },
+      { week: 'Week 4', cost: '' },
     ],
     hobby: [
       { date: '2024-08-24', item: 'paint', cost: '$10.76' },
@@ -521,10 +523,18 @@ function Main() {
       { date: '2024-02-03', item: 'canvas', cost: '$5.55' },
     ],
     housing: [
+      { name: 'Semester Cost', cost: '' },
+      { name: 'Rent', cost: '' },
+      { name: 'Utilities', cost: '' },
     ],
     tuition: [
+      { name: 'Tuition', cost: '' },
+      { name: 'Fees', cost: '' },
     ],
     scholarship: [
+      { name: 'Tuition', cost: '' },
+      { name: 'Fees', cost: '' },
+      { name: 'Housing', cost: '' },
     ]
   });
 
@@ -556,15 +566,25 @@ function Main() {
     }));
   };
 
-    
-
-
     // compute total expenses for each category for summary
-    const categoryTotals = Object.keys(categoriesData).reduce((totals, category) => {
-      const total = categoriesData[category].reduce((sum, item) => sum + parseFloat(item.cost.replace(/[$,]/g, '')), 0);
-      totals[category] = `$${total.toFixed(2)}`;
-      return totals;
-    }, {});
+  const categoryTotals = Object.keys(categoriesData).reduce((totals, category) => {
+    const total = categoriesData[category].reduce((sum, item) => {
+      const parsedCost = parseFloat(item.cost.replace(/[$,]/g, ''));
+      return sum + (isNaN(parsedCost) ? 0 : parsedCost);
+    }, 0);
+    totals[category] = `$${total.toFixed(2)}`;
+    return totals;
+  }, {});
+
+  //calculates overall expenses - scholarship 
+  const overallTotal = Object.entries(categoryTotals).reduce((sum, [category, categoryTotal]) => {
+    let parsedTotal = parseFloat(categoryTotal.replace(/[$,]/g, ''));
+    if (category === 'scholarship') {
+      return sum - parsedTotal;
+    }
+    return sum + (isNaN(parsedTotal) ? 0 : parsedTotal);
+  }, 0);
+  const formattedOverallTotal = `$${overallTotal.toFixed(2)}`;
 
     //checks if expenses being logged 
     useEffect(() => {
@@ -588,7 +608,7 @@ function Main() {
           <div className="total-text">
             <p>You have spent this much money so far:</p>
           </div>
-          <p className="total">{stats.total}</p>
+          <p className="total">{formattedOverallTotal}</p>
         </div>
         <div className="categories-summary">
           {Object.entries(categoryTotals).map(([category, total], index) => (
