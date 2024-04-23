@@ -494,16 +494,6 @@ const renderHousing = () => {
 
 function Main() {
 
-  const stats = {
-    total: '$1,234,001.50',
-    groceries: '$111.10',
-    disposable: '$93.08',
-    hobby: '$37.20',
-    housing: '$1,000,000',
-    tuition: '$3,745',
-    scholarship: '$500,000'
-  };
-
   const [categoriesData, setCategoriesData] = useState({
     
     disposable: [
@@ -539,12 +529,21 @@ function Main() {
   });
 
   //passes from category componenet
-      const updateGroceries = (newData) => {
+  const updateGroceries = async (newData) => {
+    try {
+      const response = await axios.post('http://localhost:3001/main', newData);
+      if (response.status === 200) {
         setCategoriesData(prev => ({
-            ...prev,
-            groceries: newData
+          ...prev,
+          groceries: newData
         }));
-    };
+        console.log('Update successful:', response.data);
+      }
+    } catch (error) {
+      console.error('Update failed:', error);
+    }
+  };
+  
 
     const updateHousing = (newData) => {
       setCategoriesData(prev => ({
@@ -597,6 +596,9 @@ function Main() {
         [categoryName]: [newExpense, ...prevCategories[categoryName]]
       }));
     };
+
+    //save button
+    
     
   
 
@@ -609,6 +611,24 @@ function Main() {
             <p>You have spent this much money so far:</p>
           </div>
           <p className="total">{formattedOverallTotal}</p>
+          <Button 
+            // onClick={}
+            variant="contained"
+            style={{
+              backgroundColor: '#FF684F',
+              color: 'white',
+              padding: '5px 15px',
+              fontSize: '1rem',
+              fontWeight: 'bold',
+              borderRadius: '15px',
+              marginTop: '40px',
+              marginLeft: "20px",
+              cursor: 'pointer',
+              alignSelf: 'center',
+              '&:hover': { backgroundColor: '#F47C7C'},
+            }}>
+              Save
+          </Button>
         </div>
         <div className="categories-summary">
           {Object.entries(categoryTotals).map(([category, total], index) => (
