@@ -79,7 +79,7 @@ function Category({ categoryName, items, onAddExpense, onUpdateGroceries, onUpda
         }
     }, [week1, week2, week3, week4, onUpdateGroceries, categoryName]);
     
-
+  
   //calculate budget - totalExpenses
   const totalExpenses = items.reduce((total, item) => {
     return total + parseFloat(item.cost.replace(/[$,]/g, '') || 0);
@@ -495,112 +495,163 @@ const renderHousing = () => {
 }
 
 function Main() {
-
-  const stats = {
-    total: '$1,234,001.50',
-    groceries: '$111.10',
-    disposable: '$93.08',
-    hobby: '$37.20',
-    housing: '$1,000,000',
-    tuition: '$3,745',
-    scholarship: '$500,000'
-  };
-
+  // State to hold category data
   const [categoriesData, setCategoriesData] = useState({
-    
-    disposable: [
-      { date: '2024-08-24', item: 'coffee', cost: '$4.76' },
-      { date: '2024-07-24', item: 'clothes', cost: '$20.52' },
-      { date: '2024-02-24', item: 'bike', cost: '$55.55' },
-    ],
-    groceries: [,
-    ],
-    hobby: [
-      { date: '2024-08-24', item: 'paint', cost: '$10.76' },
-      { date: '2024-07-17', item: 'paintbrush', cost: '$2.41' },
-      { date: '2024-02-03', item: 'canvas', cost: '$5.55' },
-    ],
-    housing: [
-    ],
-    tuition: [
-    ],
-    scholarship: [
-    ]
+    disposable: [],
+    groceries: [],
+    hobby: [],
+    housing: [],
+    tuition: [],
+    scholarship: []
   });
 
-  //passes from category componenet
-      const updateGroceries = (newData) => {
-        setCategoriesData(prev => ({
-            ...prev,
-            groceries: newData
-        }));
-    };
-
-    const updateHousing = (newData) => {
-      setCategoriesData(prev => ({
-          ...prev,
-          housing: newData
-      }));
-  };
-
-    const updateTuition = (newData) => {
-      setCategoriesData(prev => ({
-          ...prev,
-          tuition: newData
-      }));
-  };
-  const updateScholar = (newData) => {
-    setCategoriesData(prev => ({
-        ...prev,
-        scholarship: newData
+  // Define update functions
+  const onUpdateGroceries = (newData) => {
+    setCategoriesData((prevState) => ({
+      ...prevState,
+      groceries: newData
     }));
   };
 
-    
+  const onUpdateHousing = (newData) => {
+    setCategoriesData((prevState) => ({
+      ...prevState,
+      housing: newData
+    }));
+  };
+
+  const onUpdateTuition = (newData) => {
+    setCategoriesData((prevState) => ({
+      ...prevState,
+      tuition: newData
+    }));
+  };
+
+  const onUpdateScholar = (newData) => {
+    setCategoriesData((prevState) => ({
+      ...prevState,
+      scholarship: newData
+    }));
+  };
+  const onUpdateHobby = (newData) => {
+    setCategoriesData((prevState) => ({
+      ...prevState,
+      hobby: newData
+    }));
+  };
+
+  // useEffect to fetch "disposable" data from the server on component mount
+  useEffect(() => {
+    const fetchData = async () => {
+      var cookie = "662831ebbf1f6fa473c4c8c8";
+      var field = 'disposable';
+
+      try {
+        const response = await fetch('http://localhost:3001/query', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ cookie, field })
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+
+        const disposableData = await response.json();
+        // Update categoriesData state with fetched disposableData
+        setCategoriesData((prevState) => ({
+          ...prevState,
+          disposable: disposableData
+        }));
+
+        console.log(categoriesData.disposable);
+      } catch (error) {
+        console.error('Error fetching disposable items:', error);
+      }
+    };
+
+    // Call fetchData function on component mount
+    fetchData();
+  }, []); // Run this effect only once on component mount
 
 
-    // compute total expenses for each category for summary
-    const categoryTotals = Object.keys(categoriesData).reduce((totals, category) => {
-      const total = categoriesData[category].reduce((sum, item) => sum + parseFloat(item.cost.replace(/[$,]/g, '')), 0);
+  /*
+  // useEffect to fetch "disposable" data from the server on component mount
+  useEffect(() => {
+  const fetchData = async () => {
+    var cookie = "662831ebbf1f6fa473c4c8c8";
+    var field = 'hobby';
+
+    try {
+      const response = await fetch('http://localhost:3001/query', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ cookie, field })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch data');
+      }
+
+      const hobbyData = await response.json();
+      // Update categoriesData state with fetched disposableData
+      setCategoriesData((prevState) => ({
+        ...prevState,
+        hobby: hobbyData
+      }));
+
+      console.log(categoriesData.hobby);
+    } catch (error) {
+      console.error('Error fetching hobby items:', error);
+    }
+  };
+
+  // Call fetchData function on component mount
+  fetchData();
+}, []); // Run this effect only once on component mount
+*/
+
+
+
+  // Function to calculate category totals based on items
+  const calculateCategoryTotals = () => {
+    return Object.keys(categoriesData).reduce((totals, category) => {
+      const total = categoriesData[category].reduce((sum, item) => sum + parseFloat(item.cost.replace(/[$,]/g, '') || 0), 0);
       totals[category] = `$${total.toFixed(2)}`;
       return totals;
     }, {});
+  };
 
-    //checks if expenses being logged 
-    useEffect(() => {
-      console.log("Updated categories data:", categoriesData);
-    }, [categoriesData]);
-  
-    const addExpense = (categoryName, newExpense) => {
-      setCategoriesData(prevCategories => ({
-        ...prevCategories,
-        [categoryName]: [newExpense, ...prevCategories[categoryName]]
-      }));
-    };
-    
-  
+  // Function to render statistics based on category totals
+  const renderStats = () => {
+    const categoryTotals = calculateCategoryTotals();
 
-  const renderStats = (categoryTotals) => (
-    <div className="current-stats">
-      <Heading text = "Current Monthly Stats"></Heading>
-      <div className="stats-overview">
-        <div className="total-spending">
-          <div className="total-text">
-            <p>You have spent this much money so far:</p>
-          </div>
-          <p className="total">{stats.total}</p>
-        </div>
-        <div className="categories-summary">
-          {Object.entries(categoryTotals).map(([category, total], index) => (
-            <div className="category-stat" key={index}>
-              <span className="category-name">{category.charAt(0).toUpperCase() + category.slice(1)}:</span>
-              <span className="category-value">{total}</span>
+    return (
+      <div className="current-stats">
+        <Heading text="Current Monthly Stats" />
+        <div className="stats-overview">
+          <div className="total-spending">
+            <div className="total-text">
+              <p>You have spent this much money so far:</p>
             </div>
-          ))}
+            <p className="total">{/* Render total amount here */}</p>
+          </div>
+          <div className="categories-summary">
+            {Object.entries(categoryTotals).map(([category, total], index) => (
+              <div className="category-stat" key={index}>
+                <span className="category-name">{category.charAt(0).toUpperCase() + category.slice(1)}:</span>
+                <span className="category-value">{total}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className="main">
@@ -608,25 +659,43 @@ function Main() {
         <p>BudJet</p>
       </div>
       <div className="stats-container">
-        {renderStats(categoryTotals)}
+        {/* Render statistics based on category totals */}
+        {renderStats()}
       </div>
       <div className="categories-container">
         <div className="category-group">
-          <Category categoryName="disposable" items={categoriesData.disposable} onAddExpense={addExpense} />
-          <Category categoryName="groceries" items={categoriesData.groceries} onUpdateGroceries={updateGroceries}/>
-        </div>
-        <div className="category-group">
-          <Category categoryName="hobby" items={categoriesData.hobby} onAddExpense={addExpense} />
-          <Category categoryName="housing" items={categoriesData.housing} onUpdateHousing={updateHousing}/>
-        </div>
-        <div className="category-group">
-          <Category categoryName="tuition" items={categoriesData.tuition} onUpdateTuition={updateTuition}/>
-          <Category categoryName="scholarship" items={categoriesData.scholarship} onUpdateScholar={updateScholar}/>
+          {/* Render Category component for "disposable" category */}
+          <Category categoryName="disposable" items={categoriesData.disposable} />
+          {/* Render Category components for other categories */}
+          <Category
+            categoryName="groceries"
+            items={categoriesData.groceries}
+            onUpdateGroceries={onUpdateGroceries}
+          />
+          <Category
+            categoryName="hobby"
+            items={categoriesData.hobby}
+            onUpdateHobby={onUpdateHobby}
+          />
+          <Category
+            categoryName="housing"
+            items={categoriesData.housing}
+            onUpdateHousing={onUpdateHousing}
+          />
+          <Category
+            categoryName="tuition"
+            items={categoriesData.tuition}
+            onUpdateTuition={onUpdateTuition}
+          />
+          <Category
+            categoryName="scholarship"
+            items={categoriesData.scholarship}
+            onUpdateScholar={onUpdateScholar}
+          />
         </div>
       </div>
     </div>
   );
-  
 }
 
 export default Main;
