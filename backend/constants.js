@@ -6,7 +6,12 @@ values for every field.
 
 const DEFAULT_USER = { 
     cookie: "",
-    disposable: []
+    disposable: [],
+    groceries: [],
+    hobby: [],
+    housing: [],
+    tuition: [],
+    scholarship: []
 };
 
 const LOGIN_STRING = "mongodb+srv://codyflynn:cachecows@budjetaccountdata.eoeu7gt.mongodb.net/?retryWrites=true&w=majority&appName=BudJetAccountData"

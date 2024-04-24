@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
 import Heading from "./Heading"
 import './main.css';
+import { categories } from './utils/Icons';
 
 //creates a new expense
 function ExpenseCard({ isOpen, onClose, onSave }) {
@@ -516,6 +517,9 @@ const renderHousing = () => {
 
 function Main() {
   // State to hold category data
+  let cookie = document.cookie.split(';').find(cookie => cookie.trim().startsWith('budjetCookie'));
+  cookie = cookie ? cookie.split('=')[1] : null;
+
   const [categoriesData, setCategoriesData] = useState({
     disposable: [],
     groceries: [],
@@ -562,7 +566,6 @@ function Main() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const cookie = "662831ebbf1f6fa473c4c8c8";
   
       try {
         const response = await fetch('http://localhost:3001/query', {
@@ -631,7 +634,6 @@ function Main() {
   // useEffect to fetch "disposable" data from the server on component mount
   useEffect(() => {
   const fetchData = async () => {
-    var cookie = "662831ebbf1f6fa473c4c8c8";
     var field = 'hobby';
 
     try {
@@ -683,6 +685,34 @@ function Main() {
     }));
   };
   
+  const saveButton1 = async () => {
+    console.log("helllloooooo :D");
+    console.log(categoriesData);
+  
+    try {
+      const response = await fetch('http://localhost:3001/setquery', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          cookie: cookie,
+          categoriesData: categoriesData
+      })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch data');
+      }
+
+      const userData = await response.json();
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+
+  
+  };  
+
   // Function to render statistics based on category totals
   const renderStats = () => {
     const categoryTotals = calculateCategoryTotals();
@@ -697,7 +727,7 @@ function Main() {
             </div>
             <p className="total">{/* Render total amount here */}</p>
             <Button 
-            //onClick={SaveButton(categoriesData)}
+            onClick={saveButton1}
             variant="contained"
             style={{
               backgroundColor: '#FF684F',

@@ -202,32 +202,33 @@ async function getData(cookie) {
 
 // setter function (change data fields, opposite of above function)
 // you also have to use "await"
-async function setData(cookie, field, new_value) {
+async function setData(cookie, new_data) {
     // tries to find an entry in Data collection under the given cookie
     try {
-        if (field == "cookie")
-            throw new Error("you can't overwrite user cookies (that would destroy the database)");
         // connects to database
         await connectToMongoDB();
         // searches the database
         const result = await client.db("BudJet").collection("Data").findOne({ cookie: cookie });
         // if found, try to access the data from the given field
         if (result) {
-            // checks if field is valid and returns the value of that field if so
-            if (result[field]) {  
-                // disconnects before returning
-                const data_type = typeof result[field];
-                if (typeof new_value != data_type)
-                    throw new Error("Data types do not match!");
+	        const updateObject = {
+                disposable: new_data.disposable,
+                groceries: new_data.groceries,
+                hobby: new_data.hobby,
+                housing: new_data.housing,
+                tuition: new_data.tuition,
+                scholarship: new_data.scholarship
+       	    };
 
-                const update = { $set: { [field]: new_value } };
-                await client.db("BudJet").collection("Data").updateOne({ cookie: cookie }, update);
-                await disconnectFromMongoDB();
-                return true;
-            }
+            // Update the document with the new categories data
+            await client.db("BudJet").collection("Data").updateOne(
+                { cookie: cookie },
+                { $set: updateObject }
+            );
 
-            // otherwise, the user exists and the field doesn't, so it returns null    
-            throw new Error("Invalid field");
+            
+            await disconnectFromMongoDB();
+            return true;
         } 
         // otherwise, the cookie is invalid and it throws an error 
         else
