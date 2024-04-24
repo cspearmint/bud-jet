@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
@@ -545,38 +546,41 @@ function Main() {
     }));
   };
 
-  // useEffect to fetch "disposable" data from the server on component mount
   useEffect(() => {
     const fetchData = async () => {
-      var cookie = "662831ebbf1f6fa473c4c8c8";
-      var field = 'disposable';
-
+      const cookie = "662831ebbf1f6fa473c4c8c8";
+  
       try {
         const response = await fetch('http://localhost:3001/query', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ cookie, field })
+          body: JSON.stringify({ cookie })
         });
-
+  
         if (!response.ok) {
           throw new Error('Failed to fetch data');
         }
-
-        const disposableData = await response.json();
-        // Update categoriesData state with fetched disposableData
-        setCategoriesData((prevState) => ({
-          ...prevState,
-          disposable: disposableData
-        }));
-
-        console.log(categoriesData.disposable);
+  
+        const userData = await response.json();
+  
+        // Update categoriesData state with fetched user data
+        setCategoriesData({
+          disposable: userData.disposable || [], // Set to an empty array if userData.disposable is undefined
+          groceries: userData.groceries || [],
+          hobby: userData.hobby || [],
+          housing: userData.housing || [],
+          tuition: userData.tuition || [],
+          scholarship: userData.scholarship || []
+        });
+  
+        console.log(categoriesData); // Log the updated categoriesData object
       } catch (error) {
-        console.error('Error fetching disposable items:', error);
+        console.error('Error fetching user data:', error);
       }
     };
-
+  
     // Call fetchData function on component mount
     fetchData();
   }, []); // Run this effect only once on component mount
@@ -648,7 +652,7 @@ function Main() {
 */
 
 
-
+  
   // Function to calculate category totals based on items
   const calculateCategoryTotals = () => {
     return Object.keys(categoriesData).reduce((totals, category) => {
@@ -658,6 +662,13 @@ function Main() {
     }, {});
   };
 
+  const addExpense = (categoryName, newExpense) => {
+    setCategoriesData(prevCategories => ({
+      ...prevCategories,
+      [categoryName]: [newExpense, ...prevCategories[categoryName]]
+    }));
+  };
+  
   // Function to render statistics based on category totals
   const renderStats = () => {
     const categoryTotals = calculateCategoryTotals();
@@ -672,7 +683,7 @@ function Main() {
             </div>
             <p className="total">{/* Render total amount here */}</p>
             <Button 
-            // onClick={} CONTROLS BUTTON
+            //onClick={SaveButton(categoriesData)}
             variant="contained"
             style={{
               backgroundColor: '#FF684F',
@@ -714,7 +725,7 @@ function Main() {
       <div className="categories-container">
         <div className="category-group">
           {/* Render Category component for "disposable" category */}
-          <Category categoryName="disposable" items={categoriesData.disposable} />
+          <Category categoryName="disposable" items={categoriesData.disposable} onAddExpense={addExpense} />
           {/* Render Category components for other categories */}
           <Category
             categoryName="groceries"
@@ -724,7 +735,7 @@ function Main() {
           <Category
             categoryName="hobby"
             items={categoriesData.hobby}
-            onUpdateHobby={onUpdateHobby}
+            onAddExpense={addExpense}
           />
           <Category
             categoryName="housing"
