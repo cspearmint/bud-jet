@@ -62,22 +62,15 @@ function Category({ categoryName, items, onAddExpense, onUpdateGroceries, onUpda
   const [totalGroceries, setTotalGroceries] = useState('');
 
   //calculates groceries as user types
-  useEffect(() => {
-    const total = parseFloat(week1 || 0) + parseFloat(week2 || 0) + parseFloat(week3 || 0) + parseFloat(week4 || 0);
-    setTotalGroceries(total.toFixed(2)); 
-  }, [week1, week2, week3, week4]);
-
-      useEffect(() => {
-        if (categoryName === 'groceries') {
-            const newData = [
-                { week: 'Week 1', cost: week1 },
-                { week: 'Week 2', cost: week2 },
-                { week: 'Week 3', cost: week3 },
-                { week: 'Week 4', cost: week4 }
-            ];
-            onUpdateGroceries(newData);
-        }
-    }, [week1, week2, week3, week4, onUpdateGroceries, categoryName]);
+  const saveGroceries = () => {
+    const newData = [
+        { week: 'Week 1', cost: week1 },
+        { week: 'Week 2', cost: week2 },
+        { week: 'Week 3', cost: week3 },
+        { week: 'Week 4', cost: week4 }
+    ];
+    onUpdateGroceries(newData);
+};
     
   
   //calculate budget - totalExpenses
@@ -98,16 +91,14 @@ function Category({ categoryName, items, onAddExpense, onUpdateGroceries, onUpda
   const handleSwitchChange = () => setDormChecked(!dormChecked);
 
   //adds updated housing data
-  useEffect(() => {
-    if (categoryName === 'housing') {
-        const newData = [
-            { name: 'Semester Cost', cost: dormCost },
-            { name: 'Rent', cost: rent },
-            { name: 'Utilities', cost: utilities }
-        ];
-        onUpdateHousing(newData);
-    }
-}, [dormCost, rent, utilities, onUpdateHousing, categoryName]);
+  const saveHousing = () => {
+    const newData = [
+        { name: 'Semester Cost', cost: dormCost },
+        { name: 'Rent', cost: rent },
+        { name: 'Utilities', cost: utilities }
+    ];
+    onUpdateHousing(newData);
+};
 
 
 
@@ -123,26 +114,23 @@ function Category({ categoryName, items, onAddExpense, onUpdateGroceries, onUpda
   const [totalScholar, setTotalScholar] = useState('');
 
    //adds updated tuition & scholarhip data
-   useEffect(() => {
-    if (categoryName === 'tuition') {
-        const newData = [
-            { name: 'Tuition', cost: tuition },
-            { name: 'Fees', cost: fees }
-        ];
-        onUpdateTuition(newData);
-    }
-}, [tuition, fees, onUpdateTuition, categoryName]);
+   const saveTuition = () => {
+    const newData = [
+        { name: 'Tuition', cost: tuition },
+        { name: 'Fees', cost: fees }
+    ];
+    onUpdateTuition(newData);
+};
 
-useEffect(() => {
-  if (categoryName === 'scholarship') {
-      const newData = [
-          { name: 'Tuition', cost: tuitionScholar },
-          { name: 'Fees', cost: feesScholar },
-          { name: 'Hosuing', cost: housingScholar }
-      ];
-      onUpdateScholar(newData);
-  }
-}, [tuitionScholar, feesScholar, housingScholar, onUpdateScholar, categoryName]);
+const saveScholarship = () => {
+  const newData = [
+      { name: 'Tuition', cost: tuitionScholar },
+      { name: 'Fees', cost: feesScholar },
+      { name: 'Housing', cost: housingScholar }
+  ];
+  onUpdateScholar(newData);
+};
+
 
 // //groceries total 
 // const calculateGroceries = () => {
@@ -238,7 +226,7 @@ const renderHousing = () => {
       )}
       <div className="out-pocket-container">
         <Button 
-          onClick={calculateOutOfPocket}
+          onClick={saveHousing}
           variant="contained"
           style={{
             backgroundColor: '#FF684F',
@@ -383,6 +371,23 @@ const renderHousing = () => {
             onChange={e => setWeek4(e.target.value)}
           />
         </div>
+        <Button 
+            onClick={saveGroceries}
+            variant="contained"
+            style={{
+              backgroundColor: '#FF684F',
+              color: 'white',
+              padding: '5px 15px',
+              fontSize: '1rem',
+              fontWeight: 'bold',
+              borderRadius: '15px',
+              marginTop: '30px',
+              cursor: 'pointer',
+              alignSelf: 'center',
+              '&:hover': { backgroundColor: '#F47C7C'},
+            }}>
+            Save
+          </Button>
         </div>
       ) : null}
 
@@ -417,7 +422,7 @@ const renderHousing = () => {
         </div>
         <div className="out-pocket-container">
           <Button 
-            onClick={calculateTuition}
+            onClick={saveTuition}
             variant="contained"
             style={{
               backgroundColor: '#FF684F',
@@ -469,7 +474,7 @@ const renderHousing = () => {
         </div>
         <div className="out-pocket-container">
           <Button 
-            onClick={calculateScholarship}
+            onClick={saveScholarship}
             variant="contained"
             style={{
               backgroundColor: '#FF684F',
@@ -576,6 +581,33 @@ function Main() {
     fetchData();
   }, []); // Run this effect only once on component mount
 
+  const saveGroceries = (newData) => {
+    setCategoriesData(prevState => ({
+      ...prevState,
+      groceries: newData
+    }));
+  };
+  
+  const saveHousing = (newData) => {
+    setCategoriesData(prevState => ({
+      ...prevState,
+      housing: newData
+    }));
+  };
+
+  const saveTuition = (newData) => {
+    setCategoriesData(prevState => ({
+      ...prevState,
+      tuition: newData
+    }));
+  };
+
+  const saveScholarship = (newData) => {
+    setCategoriesData(prevState => ({
+      ...prevState,
+      scholarship: newData
+    }));
+  };
 
   /*
   // useEffect to fetch "disposable" data from the server on component mount
@@ -639,6 +671,23 @@ function Main() {
               <p>You have spent this much money so far:</p>
             </div>
             <p className="total">{/* Render total amount here */}</p>
+            <Button 
+            // onClick={} CONTROLS BUTTON
+            variant="contained"
+            style={{
+              backgroundColor: '#FF684F',
+              color: 'white',
+              padding: '5px 15px',
+              fontSize: '1rem',
+              fontWeight: 'bold',
+              borderRadius: '15px',
+              marginTop: '80px',
+              cursor: 'pointer',
+              alignSelf: 'center',
+              '&:hover': { backgroundColor: '#F47C7C'},
+            }}>
+            Save
+          </Button>
           </div>
           <div className="categories-summary">
             {Object.entries(categoryTotals).map(([category, total], index) => (
