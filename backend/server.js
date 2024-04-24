@@ -45,26 +45,32 @@ app.post('/login', async (req, res) => {
 
 });
 
-// Endpoint for handling data requests
 app.post('/query', async (req, res) => {
-  // cookie is the user ID and field is the requested field (such as monthly income)
-  const { cookie, field } = req.body;
+    // Extract the cookie from the request body
+    const { cookie } = req.body;
 
-  // calls getdata function
-  const data = await getData(cookie, field);
+    try {
+        // Call getData to fetch all data associated with the cookie
+        const userData = await getData(cookie);
 
-  // Respond with the result (if requested data is found, otherwise code 500 sent)
-  if (data === null) {
-    res.sendStatus(500);
-  } else {
-    res.status(200).send(data);
-  }
-
+        if (userData === null) {
+            // If no data is found for the given cookie, return a 404 Not Found response
+            res.status(404).send('User data not found');
+        } else {
+            // If data is found, return the user data as JSON response
+            res.status(200).json(userData);
+        }
+    } catch (error) {
+        // Handle any errors that occur during data retrieval
+        console.error('Error fetching user data:', error);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
 // idk if this works yet but looks good to me :) -Cody
 // Endpoint for handling data modification requests
 app.post('/setquery', async (req, res) => {
+  console.log("Saving begins");
   // cookie is the user ID and field is the requested field (such as monthly income)
   const { cookie, field, val } = req.body;
 
@@ -75,6 +81,7 @@ app.post('/setquery', async (req, res) => {
   if (data === false) {
     res.sendStatus(500);
   } else {
+    console.log("Saving complete");
     res.status(200).send(data);
   }
 
