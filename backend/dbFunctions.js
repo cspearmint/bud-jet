@@ -176,7 +176,7 @@ The general use case of this would be
 x = await getData("cookie string", "name of field you want");
 
 */
-async function getData(cookie, field) {
+async function getData(cookie) {
     // tries to find an entry in Data collection under the given cookie
     try {
         // connects to database
@@ -185,16 +185,9 @@ async function getData(cookie, field) {
         const result = await client.db("BudJet").collection("Data").findOne({ cookie: cookie });
         // if found, try to access the data from the given field
         if (result) {
-            // checks if field is valid and returns the value of that field if so
-            if (result[field]) {  
-                // disconnects before returning
-                await disconnectFromMongoDB();
-                return result[field];
-            }
-
-            // otherwise, the user exists and the field doesn't, so it returns null    
-            throw new Error("Invalid field");
-        } 
+            await disconnectFromMongoDB();
+            return result;
+        }
         // otherwise, the cookie is invalid and it throws an error 
         else
             throw new Error("Failed to find user");
