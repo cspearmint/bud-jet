@@ -761,7 +761,7 @@ function Main() {
     <div className="main">
      <div className="main-header-container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <p>BudJet</p>
-        {/* display user login id here */}
+        {/* DISPLAY USER'S EMAIL HERE*/}
       </div>
       <div className="stats-container">
         {/* Render statistics based on category totals */}
@@ -771,12 +771,9 @@ function Main() {
         <div className="category-group">
           {/* Render Category component for "disposable" category */}
           <Category categoryName="disposable" items={categoriesData.disposable} onAddExpense={addExpense} />
-          {/* Render Category components for other categories */}
-          <Category
-            categoryName="groceries"
-            items={categoriesData.groceries}
-            onUpdateGroceries={onUpdateGroceries}
-          />
+          <Category categoryName="groceries" items={categoriesData.groceries} onUpdateGroceries={onUpdateGroceries}/>
+          </div>
+          <div className="category-group">
           <Category
             categoryName="hobby"
             items={categoriesData.hobby}
@@ -787,6 +784,8 @@ function Main() {
             items={categoriesData.housing}
             onUpdateHousing={onUpdateHousing}
           />
+          </div>
+          <div className="category-group">
           <Category
             categoryName="tuition"
             items={categoriesData.tuition}
