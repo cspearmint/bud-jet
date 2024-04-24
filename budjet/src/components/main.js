@@ -251,12 +251,11 @@ const renderHousing = () => {
             fontSize: '1rem',
             fontWeight: 'bold',
             borderRadius: '15px',
-            marginTop: '40px',
             cursor: 'pointer',
             alignSelf: 'center',
             '&:hover': { backgroundColor: '#F47C7C'},
           }}>
-          Total Housing =
+          Out of Pocket Housing =
         </Button>
         <span>{`$${outOfPocket}`}</span>
       </div>
@@ -447,12 +446,11 @@ const renderHousing = () => {
               fontSize: '1rem',
               fontWeight: 'bold',
               borderRadius: '15px',
-              marginTop: '30px',
               cursor: 'pointer',
               alignSelf: 'center',
               '&:hover': { backgroundColor: '#F47C7C'},
             }}>
-            Total Tuition =
+            Out of Pocket Tuition =
           </Button>
           <span>{`$${tutionOutOfPocket}`}</span>
         </div>
@@ -499,7 +497,6 @@ const renderHousing = () => {
               fontSize: '1rem',
               fontWeight: 'bold',
               borderRadius: '15px',
-              marginTop: '40px',
               cursor: 'pointer',
               alignSelf: 'center',
               '&:hover': { backgroundColor: '#F47C7C'},

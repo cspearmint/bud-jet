@@ -1,3 +1,5 @@
+
+
 /*
 TODO:
 -fix width on resizing
@@ -118,6 +120,7 @@ TODO:
   font-size: 40px; 
   font-weight: bold;
   color: #FFE178;
+  padding-bottom: 2rem;
 }
 
 
@@ -132,7 +135,6 @@ TODO:
   background-color: #424B54;
   border-radius: 20px;
   padding: 1rem;
-  flex: 2; 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   position: relative;
   
@@ -198,12 +200,6 @@ TODO:
 
 
 /* disposables & hobby categories*/
-.disposable-date, .hobby-date {
-  font-weight: bold;
-  font-size: 1.4rem;
-  margin-right: 10px; 
-}
-
 .disposable .disposable-value, .hobby .hobby-value {
   color: #FFE178;
   font-size: 1.2rem;
@@ -334,11 +330,12 @@ TODO:
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); 
+  background-color: rgba(0, 0, 0, 0.185); 
   z-index: 1000; 
   display: flex;
   justify-content: center;
   align-items: center; 
+  border-color: 10px solid white;
 }
 
 .card {
@@ -350,6 +347,7 @@ TODO:
   width: 90%; 
   display: flex;
   flex-direction: column;
+  position: 'relative',
 }
 
 .card {
@@ -358,6 +356,7 @@ TODO:
   color: white;
   padding-right: 20px;
   margin: 0; 
+  border-color: 10px solid white;
 }
 .card h2 {
   position: relative; 
@@ -414,14 +413,12 @@ TODO:
 .dormcard-container {
   padding-top: 2rem;
   display: grid;
-  grid-template-columns: 0.5fr 1fr; 
+  grid-template-columns: 1fr 1fr; 
   grid-template-rows: 1fr 1fr 1fr; 
-  gap: 0px; 
   align-items: center;
   justify-items: start;
   font-weight: bold;
   font-size: 24px;
-  margin-top: -80px;
 }
 
 .out-pocket-container{
@@ -435,7 +432,6 @@ TODO:
 
 .out-pocket-container span {
   color: #FFE178;
-  margin-top: 40px;
   margin-left: 10px;
 }
 
@@ -449,21 +445,18 @@ TODO:
   justify-items: start;
   font-weight: bold;
   font-size: 24px;
-  margin-top: -80px;
 }
 
 /*tuition catgegory*/
 .tuition-container{
   padding-top: 1.5rem;
   display: grid;
-  grid-template-columns: 0.5fr 1fr; 
+  grid-template-columns: 1fr 1fr; 
   grid-template-rows: 1fr 1fr 1fr; 
-  gap: 0px; 
   align-items: center;
   justify-items: start;
   font-weight: bold;
   font-size: 24px;
-  margin-top: -55px;
 }
 
 .tuition-details input[type="text"] {
@@ -476,6 +469,7 @@ TODO:
   padding: 8px;
   width: 200px;
   margin: 5px 0; 
+  margin-right: 100px;
 }
 
 .tuition-details input[type="text"]:disabled {
@@ -494,14 +488,12 @@ TODO:
 .scholarship-container{
   padding-top: 1.5rem;
   display: grid;
-  grid-template-columns: 0.5fr 1fr; 
+  grid-template-columns: 1fr 1fr; 
   grid-template-rows: 1fr 1fr 1fr; 
-  gap: 0px; 
   align-items: center;
   justify-items: start;
   font-weight: bold;
   font-size: 24px;
-  margin-top: -80px;
 }
 
 .scholarship-details input[type="text"] {
@@ -530,15 +522,17 @@ TODO:
 
 /*groceries catgegory*/
 .groceries-container{
+  padding-top: 1.5rem;
   display: grid;
   grid-template-columns: 0.5fr 1fr; 
-  grid-template-rows: 1fr 1fr 1fr; 
-  gap: 0px; 
+  grid-template-rows: 1fr 1fr 1fr 1fr; 
+  grid-gap: 0.5rem;
   align-items: center;
   justify-items: start;
   font-weight: bold;
-  font-size: 24px;
-  margin-top: -80px;
+  font-size: 1.2rem;
+  padding-top: 1rem;
+  padding-bottom: 0.5rem;
 }
 
 .groceries-details input[type="text"] {
@@ -548,10 +542,8 @@ TODO:
   background-color: transparent; 
   border: 2px solid black; 
   border-radius: 5px; 
-  padding: 8px;
-  width: 230px;
-  margin: 5px 0; 
-  margin-right: 100px;
+  width: 80%;
+  padding: 0.3rem;
 }
 .item {
 
