@@ -72,15 +72,15 @@ app.post('/query', async (req, res) => {
 app.post('/setquery', async (req, res) => {
   console.log("Saving begins");
   // cookie is the user ID and field is the requested field (such as monthly income)
-  const { cookie, field, val } = req.body;
-
+  const { cookie, categoriesData } = req.body;
   // calls getdata function
-  const data = await setData(cookie, field, val);
+  const data = await setData(cookie, categoriesData);
 
   // Respond with the result (true if successful, otherwise code 500 sent)
   if (data === false) {
     res.sendStatus(500);
-  } else {
+  } 
+  else {
     console.log("Saving complete");
     res.status(200).send(data);
   }
