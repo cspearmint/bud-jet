@@ -11,15 +11,29 @@ function ExpenseCard({ isOpen, onClose, onSave }) {
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
   const [amount, setAmount] = useState('');
+  //ensures $ sign
+  const dollar = (event) => {
+    const value = event.target.value;
+    if (!value.startsWith('$') && value !== '') {
+      setAmount(`$${value}`);
+    } else {
+      setAmount(value);
+    }
+  };
 
-  //saves expense info & resets
+  //saves expense in catgeory
   const saveButton = () => {
-    onSave(name, date, amount);
-    setName('');
-    setDate('');
-    setAmount('');
-    onClose();
-  }
+    //ensure every field filled out
+    if (name && date && amount && amount !== '$') { 
+      onSave(name, date, amount);
+      setName('');
+      setDate('');
+      setAmount('');
+      onClose();
+    } else {
+      alert("Please fill in all fields correctly.");
+    }
+  };
 
   if (!isOpen) return null;
 
@@ -39,8 +53,8 @@ function ExpenseCard({ isOpen, onClose, onSave }) {
           Amount:
           <input 
             type="text" 
-            value={amount} 
-            onChange={(e) => setAmount(e.target.value)}
+            value={amount}
+            onChange={dollar}
             placeholder="$  --  "  
           />
         </label>
@@ -49,7 +63,7 @@ function ExpenseCard({ isOpen, onClose, onSave }) {
       </div>
     </div>
   );
-  }  
+}
 
 //specific category component
 function Category({ categoryName, items, onAddExpense, onUpdateGroceries, onUpdateHousing, onUpdateTuition, onUpdateScholar}) {
@@ -715,8 +729,9 @@ function Main() {
 
   return (
     <div className="main">
-      <div className="main-header-container">
+     <div className="main-header-container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <p>BudJet</p>
+        {/* display user login id here */}
       </div>
       <div className="stats-container">
         {/* Render statistics based on category totals */}
